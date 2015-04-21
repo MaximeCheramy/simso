@@ -1,0 +1,1253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Main modules &mdash; SimSo documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SimSo documentation" href="index.html" />
+    <link rel="next" title="Licenses" href="licenses.html" />
+    <link rel="prev" title="Using SimSo in script mode" href="text_mode.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="licenses.html" title="Licenses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="main-modules">
+<h1><a class="toc-backref" href="#id3">Main modules</a><a class="headerlink" href="#main-modules" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#main-modules" id="id3">Main modules</a><ul>
+<li><a class="reference internal" href="#module-simso.core" id="id4">simso.core module</a><ul>
+<li><a class="reference internal" href="#module-simso.core.Scheduler" id="id5">Scheduler</a></li>
+<li><a class="reference internal" href="#module-simso.core.Task" id="id6">Task</a></li>
+<li><a class="reference internal" href="#module-simso.core.Job" id="id7">Job</a></li>
+<li><a class="reference internal" href="#module-simso.core.Model" id="id8">Model</a></li>
+<li><a class="reference internal" href="#module-simso.core.Processor" id="id9">Processor</a></li>
+<li><a class="reference internal" href="#module-simso.core.Timer" id="id10">Timer</a></li>
+<li><a class="reference internal" href="#module-simso.core.Logger" id="id11">Logger</a></li>
+<li><a class="reference internal" href="#module-simso.core.results" id="id12">results</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-simso.configuration" id="id13">simso.configuration module</a><ul>
+<li><a class="reference internal" href="#module-simso.configuration.Configuration" id="id14">Configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-simso.generator.task_generator" id="id15">simso.generator module</a></li>
+<li><a class="reference internal" href="#simso-utils-module" id="id16">simso.utils module</a><ul>
+<li><a class="reference internal" href="#module-simso.utils.PartitionedScheduler" id="id17">PartitionedScheduler</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="module-simso.core">
+<span id="simso-core-module"></span><h2><a class="toc-backref" href="#id4">simso.core module</a><a class="headerlink" href="#module-simso.core" title="Permalink to this headline">¶</a></h2>
+<p>The core module include all the classes needed for the simulation.</p>
+<div class="section" id="module-simso.core.Scheduler">
+<span id="scheduler"></span><h3><a class="toc-backref" href="#id5">Scheduler</a><a class="headerlink" href="#module-simso.core.Scheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Scheduler.Scheduler">
+<em class="property">class </em><tt class="descname">Scheduler</tt><big>(</big><em>sim</em>, <em>scheduler_info</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The implementation of a scheduler is done by subclassing this abstract
+class.</p>
+<p>The scheduling events are modeled by method calls which take as arguments
+the <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><tt class="xref py py-class docutils literal"><span class="pre">jobs</span></tt></a> and the <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processors</span></tt></a>.</p>
+<p>The following methods should be redefined in order to interact with the
+simulation:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#simso.core.Scheduler.Scheduler.init" title="simso.core.Scheduler.Scheduler.init"><tt class="xref py py-meth docutils literal"><span class="pre">init()</span></tt></a> Called when the simulation is ready. The scheduler         logic should be initialized here.</li>
+<li><a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_activate" title="simso.core.Scheduler.Scheduler.on_activate"><tt class="xref py py-meth docutils literal"><span class="pre">on_activate()</span></tt></a> Called upon a job activation.</li>
+<li><a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_terminated" title="simso.core.Scheduler.Scheduler.on_terminated"><tt class="xref py py-meth docutils literal"><span class="pre">on_terminated()</span></tt></a> Called when a job is terminated.</li>
+<li><a class="reference internal" href="#simso.core.Scheduler.Scheduler.schedule" title="simso.core.Scheduler.Scheduler.schedule"><tt class="xref py py-meth docutils literal"><span class="pre">schedule()</span></tt></a> Take the scheduling decision. This method should         not be called directly. A call to the <a class="reference internal" href="#simso.core.Processor.Processor.resched" title="simso.core.Processor.Processor.resched"><tt class="xref py py-meth docutils literal"><span class="pre">resched</span></tt></a> method is required.</li>
+</ul>
+</div></blockquote>
+<p>By default, the scheduler can only run on a single processor at the same
+simulation time. It is also possible to override this behavior by
+overriding the <a class="reference internal" href="#simso.core.Scheduler.Scheduler.get_lock" title="simso.core.Scheduler.Scheduler.get_lock"><tt class="xref py py-meth docutils literal"><span class="pre">get_lock()</span></tt></a> and <a class="reference internal" href="#simso.core.Scheduler.Scheduler.release_lock" title="simso.core.Scheduler.Scheduler.release_lock"><tt class="xref py py-meth docutils literal"><span class="pre">release_lock()</span></tt></a> methods.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>scheduler_info</cite>: A <a class="reference internal" href="#simso.core.Scheduler.SchedulerInfo" title="simso.core.Scheduler.SchedulerInfo"><tt class="xref py py-class docutils literal"><span class="pre">SchedulerInfo</span></tt></a> representing the             scheduler.</li>
+</ul>
+<p>Attributes:</p>
+<ul class="simple">
+<li><strong>sim</strong>: <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.             Useful to get current time with <tt class="docutils literal"><span class="pre">sim.now_ms()</span></tt> (in ms) or             <tt class="docutils literal"><span class="pre">sim.now()</span></tt> (in cycles).</li>
+<li><strong>processors</strong>: List of <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processors</span></tt></a> handled by this scheduler.</li>
+<li><strong>task_list</strong>: List of <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">tasks</span></tt></a>             handled by this scheduler.</li>
+</ul>
+<p>Methods:</p>
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.add_processor">
+<tt class="descname">add_processor</tt><big>(</big><em>cpu</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.add_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a processor to the list of processors handled by this scheduler.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>processor</cite>: The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processor</span></tt></a> to add.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.add_task">
+<tt class="descname">add_task</tt><big>(</big><em>task</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.add_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a task to the list of tasks handled by this scheduler.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>task</cite>: The <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">task</span></tt></a> to add.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.get_lock">
+<tt class="descname">get_lock</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.get_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement a lock mechanism. Override it to remove the lock or change
+its behavior.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.init">
+<tt class="descname">init</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when the system is ready to run. This method
+should be used in lieu of the __init__ method. This method is
+guaranteed to be called when the simulation starts, after the tasks
+are instantiated</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.on_activate">
+<tt class="descname">on_activate</tt><big>(</big><em>job</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.on_activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called upon a job activation.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>job</cite>: The activated <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><tt class="xref py py-class docutils literal"><span class="pre">job</span></tt></a>.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.on_terminated">
+<tt class="descname">on_terminated</tt><big>(</big><em>job</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.on_terminated" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a job finish (termination or abortion).</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>job</cite>: The <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><tt class="xref py py-class docutils literal"><span class="pre">job</span></tt></a> that terminates .</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.release_lock">
+<tt class="descname">release_lock</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.release_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release the lock. Goes in pair with <a class="reference internal" href="#simso.core.Scheduler.Scheduler.get_lock" title="simso.core.Scheduler.Scheduler.get_lock"><tt class="xref py py-meth docutils literal"><span class="pre">get_lock()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.Scheduler.schedule">
+<tt class="descname">schedule</tt><big>(</big><em>cpu</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.Scheduler.schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>The schedule method must be redefined by the simulated scheduler.
+It takes as argument the cpu on which the scheduler runs.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>cpu</cite>: The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processor</span></tt></a>             on which the scheduler runs.</li>
+</ul>
+</dd>
+</dl>
+<p>Returns a decision or a list of decisions. A decision is a couple
+(job, cpu).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.Scheduler.SchedulerInfo">
+<em class="property">class </em><tt class="descname">SchedulerInfo</tt><big>(</big><em>name=''</em>, <em>cls=None</em>, <em>overhead=0</em>, <em>overhead_activate=0</em>, <em>overhead_terminate=0</em>, <em>fields=None</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>SchedulerInfo groups the data that characterize a Scheduler (such as the
+scheduling overhead) and do the dynamic loading of the scheduler.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>name</cite>: Name of the scheduler.</li>
+<li><cite>cls</cite>: Class associated to this scheduler.</li>
+<li><cite>overhead</cite>: Overhead associated to a scheduling decision.</li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="attribute">
+<dt id="simso.core.Scheduler.SchedulerInfo.filename">
+<tt class="descname">filename</tt><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path of the scheduler (absolute or relative to simso&#8217;s working
+directory).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.SchedulerInfo.get_cls">
+<tt class="descname">get_cls</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.get_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the class of this scheduler.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.SchedulerInfo.instantiate">
+<tt class="descname">instantiate</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.instantiate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate the <a class="reference internal" href="#simso.core.Scheduler.Scheduler" title="simso.core.Scheduler.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> class.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>model</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> object             that is passed to the constructor.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Scheduler.SchedulerInfo.name">
+<tt class="descname">name</tt><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the Scheduler (its relative path to the XML).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Scheduler.SchedulerInfo.set_name">
+<tt class="descname">set_name</tt><big>(</big><em>filename</em>, <em>cur_dir=None</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scheduler from a file.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>filename</cite>: relative path to the Python source containing the             Scheduler.</li>
+<li><cite>cur_dir</cite>: current directory. Used to set the name relatively             to the simulation file.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Task">
+<span id="task"></span><h3><a class="toc-backref" href="#id6">Task</a><a class="headerlink" href="#module-simso.core.Task" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Task.ATask">
+<em class="property">class </em><tt class="descname">ATask</tt><big>(</big><em>sim</em>, <em>task_info</em><big>)</big><a class="headerlink" href="#simso.core.Task.ATask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Non-periodic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">GenericTask</span></tt></a>. The job is
+created by another task.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><tt class="xref py py-class docutils literal"><span class="pre">TaskInfo</span></tt></a> representing the Task.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.Task.GenericTask">
+<em class="property">class </em><tt class="descname">GenericTask</tt><big>(</big><em>sim</em>, <em>task_info</em><big>)</big><a class="headerlink" href="#simso.core.Task.GenericTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for Tasks. <a class="reference internal" href="#simso.core.Task.ATask" title="simso.core.Task.ATask"><tt class="xref py py-class docutils literal"><span class="pre">ATask</span></tt></a> and <a class="reference internal" href="#simso.core.Task.PTask" title="simso.core.Task.PTask"><tt class="xref py py-class docutils literal"><span class="pre">PTask</span></tt></a> inherits from
+this class.</p>
+<p>These classes simulate the behavior of the simulated task. It controls the
+release of the jobs and is able to abort the jobs that exceed their
+deadline.</p>
+<p>The majority of the task_info attributes are available through this class
+too. A set of metrics such as the number of preemptions and migrations are
+available for analysis.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><tt class="xref py py-class docutils literal"><span class="pre">TaskInfo</span></tt></a> representing the Task.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+<dl class="method">
+<dt id="simso.core.Task.GenericTask.create_job">
+<tt class="descname">create_job</tt><big>(</big><em>pred=None</em><big>)</big><a class="headerlink" href="#simso.core.Task.GenericTask.create_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new job from this task. This should probably not be used
+directly by a scheduler.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.data">
+<tt class="descname">data</tt><a class="headerlink" href="#simso.core.Task.GenericTask.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra data to characterize the task. Only used by the scheduler.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.deadline">
+<tt class="descname">deadline</tt><a class="headerlink" href="#simso.core.Task.GenericTask.deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deadline in milliseconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.followed_by">
+<tt class="descname">followed_by</tt><a class="headerlink" href="#simso.core.Task.GenericTask.followed_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Task that is activated by the end of a job from this task.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.identifier">
+<tt class="descname">identifier</tt><a class="headerlink" href="#simso.core.Task.GenericTask.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier of the task.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.jobs">
+<tt class="descname">jobs</tt><a class="headerlink" href="#simso.core.Task.GenericTask.jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the jobs.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.monitor">
+<tt class="descname">monitor</tt><a class="headerlink" href="#simso.core.Task.GenericTask.monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The monitor for this Task. Similar to a log mechanism (see Monitor in
+SimPy doc).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.period">
+<tt class="descname">period</tt><a class="headerlink" href="#simso.core.Task.GenericTask.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Period of the task.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.GenericTask.wcet">
+<tt class="descname">wcet</tt><a class="headerlink" href="#simso.core.Task.GenericTask.wcet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Case Execution Time in milliseconds.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.Task.PTask">
+<em class="property">class </em><tt class="descname">PTask</tt><big>(</big><em>sim</em>, <em>task_info</em><big>)</big><a class="headerlink" href="#simso.core.Task.PTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Periodic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">GenericTask</span></tt></a>. The jobs are
+created periodically.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><tt class="xref py py-class docutils literal"><span class="pre">TaskInfo</span></tt></a> representing the Task.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.Task.SporadicTask">
+<em class="property">class </em><tt class="descname">SporadicTask</tt><big>(</big><em>sim</em>, <em>task_info</em><big>)</big><a class="headerlink" href="#simso.core.Task.SporadicTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sporadic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">GenericTask</span></tt></a>. The jobs are
+created using a list of activation dates.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><tt class="xref py py-class docutils literal"><span class="pre">TaskInfo</span></tt></a> representing the Task.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.core.Task.Task">
+<tt class="descname">Task</tt><big>(</big><em>sim</em>, <em>task_info</em><big>)</big><a class="headerlink" href="#simso.core.Task.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Task factory. Return and instantiate the correct class according to the
+task_info.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.Task.TaskInfo">
+<em class="property">class </em><tt class="descname">TaskInfo</tt><big>(</big><em>name</em>, <em>identifier</em>, <em>task_type</em>, <em>abort_on_miss</em>, <em>period</em>, <em>activation_date</em>, <em>n_instr</em>, <em>mix</em>, <em>stack_file</em>, <em>wcet</em>, <em>acet</em>, <em>et_stddev</em>, <em>deadline</em>, <em>base_cpi</em>, <em>followed_by</em>, <em>list_activation_dates</em>, <em>preemption_cost</em>, <em>data</em><big>)</big><a class="headerlink" href="#simso.core.Task.TaskInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>TaskInfo is mainly a container class grouping the data that characterize
+a Task. A list of TaskInfo objects are passed to the Model so that
+<a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><tt class="xref py py-class docutils literal"><span class="pre">Task</span></tt></a> instances can be created.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="simso.core.Task.TaskInfo.csdp">
+<tt class="descname">csdp</tt><a class="headerlink" href="#simso.core.Task.TaskInfo.csdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulated Stack Distance Profile. Used by the cache models instead of
+the Stack Distance Profile for optimization matters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Task.TaskInfo.set_stack_file">
+<tt class="descname">set_stack_file</tt><big>(</big><em>stack_file</em>, <em>cur_dir</em><big>)</big><a class="headerlink" href="#simso.core.Task.TaskInfo.set_stack_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the stack distance profile.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Task.TaskInfo.stack_file">
+<tt class="descname">stack_file</tt><a class="headerlink" href="#simso.core.Task.TaskInfo.stack_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack distance profile input file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Job">
+<span id="job"></span><h3><a class="toc-backref" href="#id7">Job</a><a class="headerlink" href="#module-simso.core.Job" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Job.Job">
+<em class="property">class </em><tt class="descname">Job</tt><big>(</big><em>task</em>, <em>name</em>, <em>pred</em>, <em>monitor</em>, <em>etm</em>, <em>sim</em><big>)</big><a class="headerlink" href="#simso.core.Job.Job" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Job class simulate the behavior of a real Job. This <em>should</em> only be
+instantiated by a Task.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>task</cite>: The parent <a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><tt class="xref py py-class docutils literal"><span class="pre">task</span></tt></a>.</li>
+<li><cite>name</cite>: The name for this job.</li>
+<li><cite>pred</cite>: If the task is not periodic, pred is the job that             released this one.</li>
+<li><cite>monitor</cite>: A monitor is an object that log in time.</li>
+<li><cite>etm</cite>: The execution time model.</li>
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+</tbody>
+</table>
+<dl class="method">
+<dt id="simso.core.Job.Job.abort">
+<tt class="descname">abort</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Job.Job.abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abort this job. Warning, this is currently only used by the Task when
+the job exceeds its deadline. It has not be tested from outside, such
+as from the scheduler.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.aborted">
+<tt class="descname">aborted</tt><a class="headerlink" href="#simso.core.Job.Job.aborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the job has been aborted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.absolute_deadline">
+<tt class="descname">absolute_deadline</tt><a class="headerlink" href="#simso.core.Job.Job.absolute_deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute deadline in milliseconds for this job. This is the activation
+date + the relative deadline.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.activation_date">
+<tt class="descname">activation_date</tt><a class="headerlink" href="#simso.core.Job.Job.activation_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activation date in milliseconds for this job.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.actual_computation_time_cycles">
+<tt class="descname">actual_computation_time_cycles</tt><a class="headerlink" href="#simso.core.Job.Job.actual_computation_time_cycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computation time as if the processor speed was 1.0 during the whole
+execution.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.cpu">
+<tt class="descname">cpu</tt><a class="headerlink" href="#simso.core.Job.Job.cpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processor</span></tt></a> on which the
+job is attached. Equivalent to <tt class="docutils literal"><span class="pre">self.task.cpu</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.data">
+<tt class="descname">data</tt><a class="headerlink" href="#simso.core.Job.Job.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The extra data specified for the task. Equivalent to
+<tt class="docutils literal"><span class="pre">self.task.data</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.deadline">
+<tt class="descname">deadline</tt><a class="headerlink" href="#simso.core.Job.Job.deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative deadline in milliseconds.
+Equivalent to <tt class="docutils literal"><span class="pre">self.task.deadline</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.end_date">
+<tt class="descname">end_date</tt><a class="headerlink" href="#simso.core.Job.Job.end_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date (in ms) when this job finished its execution.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.exceeded_deadline">
+<tt class="descname">exceeded_deadline</tt><a class="headerlink" href="#simso.core.Job.Job.exceeded_deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the end_date is greater than the deadline or if the job was
+aborted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Job.Job.is_active">
+<tt class="descname">is_active</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Job.Job.is_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the job is still active.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Job.Job.is_running">
+<tt class="descname">is_running</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Job.Job.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the job is currently running on a processor.
+Equivalent to <tt class="docutils literal"><span class="pre">self.cpu.running</span> <span class="pre">==</span> <span class="pre">self</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.period">
+<tt class="descname">period</tt><a class="headerlink" href="#simso.core.Job.Job.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Period in milliseconds. Equivalent to <tt class="docutils literal"><span class="pre">self.task.period</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.ret">
+<tt class="descname">ret</tt><a class="headerlink" href="#simso.core.Job.Job.ret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remaining execution time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.start_date">
+<tt class="descname">start_date</tt><a class="headerlink" href="#simso.core.Job.Job.start_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date (in ms) when this job started executing
+(different than the activation).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.task">
+<tt class="descname">task</tt><a class="headerlink" href="#simso.core.Job.Job.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><tt class="xref py py-class docutils literal"><span class="pre">task</span></tt></a> for this job.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.wcet">
+<tt class="descname">wcet</tt><a class="headerlink" href="#simso.core.Job.Job.wcet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Case Execution Time in milliseconds.
+Equivalent to <tt class="docutils literal"><span class="pre">self.task.wcet</span></tt>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Model">
+<span id="model"></span><h3><a class="toc-backref" href="#id8">Model</a><a class="headerlink" href="#module-simso.core.Model" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Model.Model">
+<em class="property">class </em><tt class="descname">Model</tt><big>(</big><em>configuration</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#simso.core.Model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class for the simulation. It instantiate the various components
+required by the simulation and run it.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>callback</cite>: A callback can be specified. This function will be                 called to report the advance of the simulation (useful for a                 progression bar).</li>
+<li><cite>configuration</cite>: The <a class="reference internal" href="#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><tt class="xref py py-class docutils literal"><span class="pre">configuration</span></tt></a> of the simulation.</li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="attribute">
+<dt id="simso.core.Model.Model.cycles_per_ms">
+<tt class="descname">cycles_per_ms</tt><a class="headerlink" href="#simso.core.Model.Model.cycles_per_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of cycles per milliseconds. A cycle is the internal unit used
+by SimSo. However, the tasks are defined using milliseconds.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Model.Model.duration">
+<tt class="descname">duration</tt><a class="headerlink" href="#simso.core.Model.Model.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duration of the simulation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Model.Model.etm">
+<tt class="descname">etm</tt><a class="headerlink" href="#simso.core.Model.Model.etm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execution Time Model</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Model.Model.logs">
+<tt class="descname">logs</tt><a class="headerlink" href="#simso.core.Model.Model.logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the logs from the <a class="reference internal" href="#simso.core.Logger.Logger" title="simso.core.Logger.Logger"><tt class="xref py py-class docutils literal"><span class="pre">Logger</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Model.Model.processors">
+<tt class="descname">processors</tt><a class="headerlink" href="#simso.core.Model.Model.processors" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all the processors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Model.Model.run_model">
+<tt class="descname">run_model</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Model.Model.run_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the simulation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Model.Model.task_list">
+<tt class="descname">task_list</tt><a class="headerlink" href="#simso.core.Model.Model.task_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all the tasks.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Processor">
+<span id="processor"></span><h3><a class="toc-backref" href="#id9">Processor</a><a class="headerlink" href="#module-simso.core.Processor" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Processor.Processor">
+<em class="property">class </em><tt class="descname">Processor</tt><big>(</big><em>model</em>, <em>proc_info</em><big>)</big><a class="headerlink" href="#simso.core.Processor.Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A processor is responsible of deciding whether the simulated processor
+should execute a job or execute the scheduler. There is one instance of
+Processor per simulated processor. Those are responsible to call the
+scheduler methods.</p>
+<p>When a scheduler needs to take a scheduling decision, it must invoke the
+<a class="reference internal" href="#simso.core.Processor.Processor.resched" title="simso.core.Processor.Processor.resched"><tt class="xref py py-meth docutils literal"><span class="pre">resched()</span></tt></a> method. This is typically done in the <a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_activate" title="simso.core.Scheduler.Scheduler.on_activate"><tt class="xref py py-meth docutils literal"><span class="pre">on_activate</span></tt></a>, <a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_terminated" title="simso.core.Scheduler.Scheduler.on_terminated"><tt class="xref py py-meth docutils literal"><span class="pre">on_terminated</span></tt></a> or in a <a class="reference internal" href="#simso.core.Timer.Timer" title="simso.core.Timer.Timer"><tt class="xref py py-class docutils literal"><span class="pre">timer</span></tt></a> handler.</p>
+<dl class="attribute">
+<dt id="simso.core.Processor.Processor.internal_id">
+<tt class="descname">internal_id</tt><a class="headerlink" href="#simso.core.Processor.Processor.internal_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unique, internal, id.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Processor.Processor.is_running">
+<tt class="descname">is_running</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Processor.Processor.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if a job is currently running on that processor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Processor.Processor.resched">
+<tt class="descname">resched</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Processor.Processor.resched" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a resched event to the list of events to handle.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Processor.Processor.running">
+<tt class="descname">running</tt><a class="headerlink" href="#simso.core.Processor.Processor.running" title="Permalink to this definition">¶</a></dt>
+<dd><p>The job currently running on that processor. None if no job is
+currently running on the processor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Timer">
+<span id="timer"></span><h3><a class="toc-backref" href="#id10">Timer</a><a class="headerlink" href="#module-simso.core.Timer" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Timer.Timer">
+<em class="property">class </em><tt class="descname">Timer</tt><big>(</big><em>sim</em>, <em>function</em>, <em>args</em>, <em>delay</em>, <em>one_shot=True</em>, <em>prior=False</em>, <em>cpu=None</em>, <em>in_ms=True</em>, <em>overhead=0</em><big>)</big><a class="headerlink" href="#simso.core.Timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to declare a timer. A timer is a mechanism that allows to call a
+function after a certain amount of time, periodically or single shot.</p>
+<p>A Timer can be used with or without specifying a processor. If a processor
+is specified, when the timer fire, if a job was running on the processor,
+it is temporarly interrupted. This is more realistic, even if for the
+moment there is no overhead associated to this action. A scheduler using a
+timer should define on which processor the callback will execute.</p>
+<p>The delay is expressed in milliseconds by default but it can also be given
+in cycles.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>sim</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">model</span></tt></a> object.</li>
+<li><cite>function</cite>: Callback function, called when the delay expires.</li>
+<li><cite>args</cite>: Arguments passed to the callback function.</li>
+<li><cite>delay</cite>: Time to wait before calling the function.</li>
+<li><cite>one_shot</cite>: True if the timer should execute only once.</li>
+<li><cite>prior</cite>: If true, for the same date, the simulation should             start by handling the timer (should probably not be True).</li>
+<li><cite>cpu</cite>: On which <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processor</span></tt></a> the function is virtually             executing.</li>
+<li><cite>in_ms</cite>: True if the delay is expressed in millisecond. In             cycles otherwise.</li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="method">
+<dt id="simso.core.Timer.Timer.start">
+<tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Timer.Timer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the timer.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.Timer.Timer.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Timer.Timer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.Logger">
+<span id="logger"></span><h3><a class="toc-backref" href="#id11">Logger</a><a class="headerlink" href="#module-simso.core.Logger" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.Logger.Logger">
+<em class="property">class </em><tt class="descname">Logger</tt><big>(</big><em>sim</em><big>)</big><a class="headerlink" href="#simso.core.Logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple logger. Every message is logged with its date.</p>
+<p>Args:
+- <cite>sim</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">model</span></tt></a> object.</p>
+<dl class="method">
+<dt id="simso.core.Logger.Logger.log">
+<tt class="descname">log</tt><big>(</big><em>msg</em>, <em>kernel=False</em><big>)</big><a class="headerlink" href="#simso.core.Logger.Logger.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the message <cite>msg</cite>.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>msg</cite>: The message to log.</li>
+<li><cite>kernel</cite>: Allows to make a distinction between a message from             the core of the simulation or from the scheduler.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Logger.Logger.logs">
+<tt class="descname">logs</tt><a class="headerlink" href="#simso.core.Logger.Logger.logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The logs, a SimPy Monitor object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-simso.core.results">
+<span id="results"></span><h3><a class="toc-backref" href="#id12">results</a><a class="headerlink" href="#module-simso.core.results" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.core.results.JobR">
+<em class="property">class </em><tt class="descname">JobR</tt><big>(</big><em>date</em>, <em>job</em><big>)</big><a class="headerlink" href="#simso.core.results.JobR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a set of metrics to a job. Such metrics include: preemption count,
+migration count, response time, etc.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.results.ProcessorR">
+<em class="property">class </em><tt class="descname">ProcessorR</tt><a class="headerlink" href="#simso.core.results.ProcessorR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add information about a processor such as the number of CxtSave and
+CxtLoad and their total overhead.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.results.Results">
+<em class="property">class </em><tt class="descname">Results</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#simso.core.results.Results" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class embeds and analyzes all the results from the simulation.
+This allows to retrieve the usual metrics.</p>
+<dl class="docutils">
+<dt>The Results instance object contains the following attributes:</dt>
+<dd><ul class="first last simple">
+<li><cite>tasks</cite>: a dictionary of TaskR where the key is the original Task.</li>
+<li><cite>scheduler</cite>: a SchedulerR instance.</li>
+<li><cite>processors</cite>: a dictionary of ProcessorR where the key is the             original Processor.</li>
+</ul>
+</dd>
+</dl>
+<p>.</p>
+<dl class="method">
+<dt id="simso.core.results.Results.calc_load">
+<tt class="descname">calc_load</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.results.Results.calc_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield a tuple (proc, load, overhead) for each processor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.results.Results.get_observation_window">
+<tt class="descname">get_observation_window</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.results.Results.get_observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the observation window.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.results.Results.observation_window">
+<tt class="descname">observation_window</tt><a class="headerlink" href="#simso.core.results.Results.observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the observation window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.results.Results.set_observation_window">
+<tt class="descname">set_observation_window</tt><big>(</big><em>window</em><big>)</big><a class="headerlink" href="#simso.core.results.Results.set_observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the observation window. The events that occurs outside of the
+observation window are discarded.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.core.results.Results.tasks_event">
+<tt class="descname">tasks_event</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.results.Results.tasks_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the tasks events sorted by their date.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.results.SchedulerR">
+<em class="property">class </em><tt class="descname">SchedulerR</tt><a class="headerlink" href="#simso.core.results.SchedulerR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add information about the scheduler such as the number of scheduling
+events and their total overhead.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="simso.core.results.TaskR">
+<em class="property">class </em><tt class="descname">TaskR</tt><big>(</big><em>task</em>, <em>delta_preemption=100</em><big>)</big><a class="headerlink" href="#simso.core.results.TaskR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a set of metrics to a task. These metrics include: task_migrations,
+abortion count, etc.</p>
+<p>The attribute jobs contains a list of JobR, sorted by activation date.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-simso.configuration">
+<span id="simso-configuration-module"></span><h2><a class="toc-backref" href="#id13">simso.configuration module</a><a class="headerlink" href="#module-simso.configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-simso.configuration.Configuration">
+<span id="configuration"></span><h3><a class="toc-backref" href="#id14">Configuration</a><a class="headerlink" href="#module-simso.configuration.Configuration" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.configuration.Configuration.Configuration">
+<em class="property">class </em><tt class="descname">Configuration</tt><big>(</big><em>filename=None</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The configuration class store all the details about a system. An instance
+of this class will be passed to the constructor of the
+<a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> class.</p>
+<p>Args:
+- <cite>filename</cite> A file can be used to initialize the configuration.</p>
+<dl class="method">
+<dt id="simso.configuration.Configuration.Configuration.add_processor">
+<tt class="descname">add_processor</tt><big>(</big><em>name</em>, <em>identifier</em>, <em>cs_overhead=0</em>, <em>cl_overhead=0</em>, <em>migration_overhead=0</em>, <em>speed=1.0</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to create a ProcInfo and add it to the list of
+processors.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.configuration.Configuration.Configuration.add_task">
+<tt class="descname">add_task</tt><big>(</big><em>name</em>, <em>identifier</em>, <em>task_type='Periodic'</em>, <em>abort_on_miss=False</em>, <em>period=10</em>, <em>activation_date=0</em>, <em>n_instr=0</em>, <em>mix=0.5</em>, <em>stack_file=''</em>, <em>wcet=0</em>, <em>acet=0</em>, <em>et_stddev=0</em>, <em>deadline=10</em>, <em>base_cpi=1.0</em>, <em>followed_by=None</em>, <em>list_activation_dates=[]</em>, <em>preemption_cost=0</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to create a TaskInfo and add it to the list of tasks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.configuration.Configuration.Configuration.check_all">
+<tt class="descname">check_all</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.check_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the correctness of the configuration (without simulating it).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.configuration.Configuration.Configuration.get_hyperperiod">
+<tt class="descname">get_hyperperiod</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.get_hyperperiod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and return the hyperperiod of the tasks.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.configuration.Configuration.Configuration.proc_info_list">
+<tt class="descname">proc_info_list</tt><a class="headerlink" href="#simso.configuration.Configuration.Configuration.proc_info_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of processors (ProcInfo objects).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="simso.configuration.Configuration.Configuration.save">
+<tt class="descname">save</tt><big>(</big><em>simulation_file=None</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current configuration in a file. If no file is given as
+argument, the previous file used to write or read the configuration is
+used again.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.configuration.Configuration.Configuration.scheduler_info">
+<tt class="descname">scheduler_info</tt><a class="headerlink" href="#simso.configuration.Configuration.Configuration.scheduler_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>SchedulerInfo object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.configuration.Configuration.Configuration.task_info_list">
+<tt class="descname">task_info_list</tt><a class="headerlink" href="#simso.configuration.Configuration.Configuration.task_info_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tasks (TaskInfo objects).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-simso.generator.task_generator">
+<span id="simso-generator-module"></span><h2><a class="toc-backref" href="#id15">simso.generator module</a><a class="headerlink" href="#module-simso.generator.task_generator" title="Permalink to this headline">¶</a></h2>
+<p>Tools for generating task sets.</p>
+<dl class="function">
+<dt id="simso.generator.task_generator.StaffordRandFixedSum">
+<tt class="descname">StaffordRandFixedSum</tt><big>(</big><em>n</em>, <em>u</em>, <em>nsets</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.StaffordRandFixedSum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copyright 2010 Paul Emberson, Roger Stafford, Robert Davis.
+All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>Redistributions of source code must retain the above copyright notice,</dt>
+<dd><p class="first last">this list of conditions and the following disclaimer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Redistributions in binary form must reproduce the above copyright notice,</dt>
+<dd><p class="first last">this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS <a href="#id1"><span class="problematic" id="id2">``</span></a>AS IS&#8217;&#8217; AND ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+<p>The views and conclusions contained in the software and documentation are
+those of the authors and should not be interpreted as representing official
+policies, either expressed or implied, of Paul Emberson, Roger Stafford or
+Robert Davis.</p>
+<p>Includes Python implementation of Roger Stafford&#8217;s randfixedsum implementation
+<a class="reference external" href="http://www.mathworks.com/matlabcentral/fileexchange/9700">http://www.mathworks.com/matlabcentral/fileexchange/9700</a>
+Adapted specifically for the purpose of taskset generation with fixed
+total utilisation value</p>
+<p>Please contact <a class="reference external" href="mailto:paule&#37;&#52;&#48;rapitasystems&#46;com">paule<span>&#64;</span>rapitasystems<span>&#46;</span>com</a> or <a class="reference external" href="mailto:robdavis&#37;&#52;&#48;cs&#46;york&#46;ac&#46;uk">robdavis<span>&#64;</span>cs<span>&#46;</span>york<span>&#46;</span>ac<span>&#46;</span>uk</a> if you have
+any questions regarding this software.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_kato_utilizations">
+<tt class="descname">gen_kato_utilizations</tt><big>(</big><em>nsets</em>, <em>umin</em>, <em>umax</em>, <em>target_util</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_kato_utilizations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kato et al. tasksets generator.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>nsets</cite>: Number of tasksets to generate.</li>
+<li><cite>umin</cite>: Minimum task utilization.</li>
+<li><cite>umax</cite>: Maximum task utilization.</li>
+<li><cite>target_util</cite>:</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_periods_discrete">
+<tt class="descname">gen_periods_discrete</tt><big>(</big><em>n</em>, <em>nsets</em>, <em>periods</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_periods_discrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a matrix of (nsets x n) random periods chosen randomly in the
+list of periods.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>n</cite>: The number of tasks in a task set.</li>
+<li><cite>nsets</cite>: Number of sets to generate.</li>
+<li><cite>periods</cite>: A list of available periods.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_periods_loguniform">
+<tt class="descname">gen_periods_loguniform</tt><big>(</big><em>n</em>, <em>nsets</em>, <em>min_</em>, <em>max_</em>, <em>round_to_int=False</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_periods_loguniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a list of <cite>nsets</cite> sets containing each <cite>n</cite> random periods using a
+loguniform distribution.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>n</cite>: The number of tasks in a task set.</li>
+<li><cite>nsets</cite>: Number of sets to generate.</li>
+<li><cite>min_</cite>: Period min.</li>
+<li><cite>max_</cite>: Period max.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_periods_uniform">
+<tt class="descname">gen_periods_uniform</tt><big>(</big><em>n</em>, <em>nsets</em>, <em>min_</em>, <em>max_</em>, <em>round_to_int=False</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_periods_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a list of <cite>nsets</cite> sets containing each <cite>n</cite> random periods using a
+uniform distribution.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>n</cite>: The number of tasks in a task set.</li>
+<li><cite>nsets</cite>: Number of sets to generate.</li>
+<li><cite>min_</cite>: Period min.</li>
+<li><cite>max_</cite>: Period max.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_randfixedsum">
+<tt class="descname">gen_randfixedsum</tt><big>(</big><em>nsets</em>, <em>u</em>, <em>n</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_randfixedsum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stafford&#8217;s RandFixedSum algorithm implementated in Python.</p>
+<p>Based on the Python implementation given by Paul Emberson, Roger Stafford,
+and Robert Davis. Available under the Simplified BSD License.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>n</cite>: The number of tasks in a task set.</li>
+<li><cite>u</cite>: Total utilization of the task set.</li>
+<li><cite>nsets</cite>: Number of sets to generate.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_ripoll">
+<tt class="descname">gen_ripoll</tt><big>(</big><em>nsets</em>, <em>compute</em>, <em>deadline</em>, <em>period</em>, <em>target_util</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_ripoll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ripoll et al. tasksets generator.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>nsets</cite>: Number of tasksets to generate.</li>
+<li><cite>compute</cite>: Maximum computation time of a task.</li>
+<li><cite>deadline</cite>: Maximum slack time.</li>
+<li><cite>period</cite>: Maximum delay after the deadline.</li>
+<li><cite>target_util</cite>: Total utilization to reach.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_tasksets">
+<tt class="descname">gen_tasksets</tt><big>(</big><em>utilizations</em>, <em>periods</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_tasksets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a list of task utilization sets and a list of task period sets and
+return a list of couples (c, p) sets. The computation times are truncated
+at a precision of 10^-10 to avoid floating point precision errors.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last">
+<li><p class="first"><cite>utilization</cite>: The list of task utilization sets. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><cite>periods</cite>: The list of task period sets. For examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt>
+<dd><p class="first">For the above example, it returns:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="p">[[(</span><span class="mf">30.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="mf">20.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="p">(</span><span class="mf">450.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.generator.task_generator.gen_uunifastdiscard">
+<tt class="descname">gen_uunifastdiscard</tt><big>(</big><em>nsets</em>, <em>u</em>, <em>n</em><big>)</big><a class="headerlink" href="#simso.generator.task_generator.gen_uunifastdiscard" title="Permalink to this definition">¶</a></dt>
+<dd><p>The UUniFast algorithm was proposed by Bini for generating task
+utilizations on uniprocessor architectures.</p>
+<p>The UUniFast-Discard algorithm extends it to multiprocessor by
+discarding task sets containing any utilization that exceeds 1.</p>
+<p>This algorithm is easy and widely used. However, it suffers from very
+long computation times when n is close to u. Stafford&#8217;s algorithm is
+faster.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>n</cite>: The number of tasks in a task set.</li>
+<li><cite>u</cite>: Total utilization of the task set.</li>
+<li><cite>nsets</cite>: Number of sets to generate.</li>
+</ul>
+</dd>
+</dl>
+<p>Returns <cite>nsets</cite> of <cite>n</cite> task utilizations.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="simso-utils-module">
+<h2><a class="toc-backref" href="#id16">simso.utils module</a><a class="headerlink" href="#simso-utils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-simso.utils.PartitionedScheduler">
+<span id="partitionedscheduler"></span><h3><a class="toc-backref" href="#id17">PartitionedScheduler</a><a class="headerlink" href="#module-simso.utils.PartitionedScheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="simso.utils.PartitionedScheduler.PartitionedScheduler">
+<em class="property">class </em><tt class="descname">PartitionedScheduler</tt><big>(</big><em>sim</em>, <em>scheduler_info</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The PartitionedScheduler class provide facilities to create a new
+Partitioned Scheduler. Only the packing phase is not done and should
+be overriden.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.</li>
+<li><cite>scheduler_info</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">SchedulerInfo</span></tt> representing the             scheduler.</li>
+</ul>
+<p>Attributes:</p>
+<ul class="simple">
+<li><strong>sim</strong>: <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> instance.             Useful to get current time with <tt class="docutils literal"><span class="pre">sim.now_ms()</span></tt> (in ms) or             <tt class="docutils literal"><span class="pre">sim.now()</span></tt> (in cycles).</li>
+<li><strong>processors</strong>: List of <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">processors</span></tt></a> handled by this scheduler.</li>
+<li><strong>task_list</strong>: List of <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><tt class="xref py py-class docutils literal"><span class="pre">tasks</span></tt></a>             handled by this scheduler.</li>
+</ul>
+<p>Methods:</p>
+<dl class="method">
+<dt id="simso.utils.PartitionedScheduler.PartitionedScheduler.init">
+<tt class="descname">init</tt><big>(</big><em>scheduler_info</em>, <em>packer=None</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.init" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Args:</dt>
+<dd><ul class="first last simple">
+<li><cite>scheduler_info</cite>: A <a class="reference internal" href="#simso.core.Scheduler.SchedulerInfo" title="simso.core.Scheduler.SchedulerInfo"><tt class="xref py py-class docutils literal"><span class="pre">SchedulerInfo</span></tt></a> object. One scheduler from             this SchedulerInfo will be instantiated for each processor.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.best_fit">
+<tt class="descname">best_fit</tt><big>(</big><em>scheduler</em>, <em>task_list=None</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.best_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Best-Fit heuristic. Put the tasks somewhere it fits but with the least
+spare place.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.decreasing_best_fit">
+<tt class="descname">decreasing_best_fit</tt><big>(</big><em>scheduler</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_best_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Best-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.decreasing_first_fit">
+<tt class="descname">decreasing_first_fit</tt><big>(</big><em>scheduler</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_first_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>First-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.decreasing_next_fit">
+<tt class="descname">decreasing_next_fit</tt><big>(</big><em>scheduler</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_next_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Next-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.decreasing_worst_fit">
+<tt class="descname">decreasing_worst_fit</tt><big>(</big><em>scheduler</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_worst_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.first_fit">
+<tt class="descname">first_fit</tt><big>(</big><em>scheduler</em>, <em>task_list=None</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.first_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>First-Fit heuristic. Put each task on the first processor with enough
+space.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.next_fit">
+<tt class="descname">next_fit</tt><big>(</big><em>scheduler</em>, <em>task_list=None</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.next_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Next-Fit heuristic. Put each task on the next processor with enough space.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="simso.utils.PartitionedScheduler.worst_fit">
+<tt class="descname">worst_fit</tt><big>(</big><em>scheduler</em>, <em>task_list=None</em><big>)</big><a class="headerlink" href="#simso.utils.PartitionedScheduler.worst_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Fit heuristic. Put the tasks somewhere it fits with the largest
+spare place.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="licenses.html" title="Licenses"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             >previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

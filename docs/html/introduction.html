@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; SimSo documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SimSo documentation" href="index.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="SimSo documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="SimSo documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-simso">
+<h2>What is SimSo?<a class="headerlink" href="#what-is-simso" title="Permalink to this headline">¶</a></h2>
+<p>SimSo is a scheduling simulator for real-time multiprocessor architectures that takes into account some scheduling overheads (scheduling decisions, context switches) and the impact of caches through statistical models. Based on a Discrete-Event Simulator (SimPy), it allows quick simulations and a fast prototyping of scheduling policies using Python.</p>
+<p>SimSo is an open source software, available under the <a class="reference external" href="licenses.html">CeCILL license</a>, a GPL compatible license.</p>
+</div>
+<div class="section" id="download">
+<h2>Download<a class="headerlink" href="#download" title="Permalink to this headline">¶</a></h2>
+<p>You can find the last version of SimSo on the <a class="reference external" href="http://homepages.laas.fr/mcheramy/simso/">SimSo Website</a>.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>SimSo is available for the main platforms and so is its source code. The archive containing the source code is more often updated and should be used when possible.</p>
+<p>In order to install SimSo from the souce code, the dependences must be installed first. Then, type &#8220;python setup.py install&#8221; to install SimSo.</p>
+<div class="section" id="dependencies">
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h3>
+<p>When using SimSo from the sources, the following softwares and librairies are required:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Python 2.7+</li>
+<li>SimPy 2.3.1 (not compatible with SimPy 3)</li>
+<li>NumPy 1.6+</li>
+<li>PyQt4 4.9+</li>
+</ul>
+</div></blockquote>
+<p>If you are using a binary, everything should be packed in the binary.</p>
+</div>
+</div>
+<div class="section" id="first-step">
+<h2>First step<a class="headerlink" href="#first-step" title="Permalink to this headline">¶</a></h2>
+<p>SimSo is provided with a graphical user interface that aims to be very easy to use. This is a good way to develop and test a scheduler. See <a class="reference external" href="write_scheduler.html">How to write a scheduling policy</a>.</p>
+<p>It is also possible to use SimSo as a library. This allows in particular to run simulations in text mode with a maximum of flexibility.</p>
+</div>
+<div class="section" id="available-schedulers">
+<h2>Available Schedulers<a class="headerlink" href="#available-schedulers" title="Permalink to this headline">¶</a></h2>
+<p>Currently, the following schedulers are available:</p>
+<p><strong>Uniprocessor schedulers</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Earliest Deadline First (EDF)</li>
+<li>Rate Monotonic (RM)</li>
+<li>Fixed Priority (FP)</li>
+<li>Static-EDF (A DVFS EDF)</li>
+<li>CC-EDF: Real-Time dynamic voltage scaling for low-power embedded operating systems by P. Pillai et al.</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt><strong>Uniprocessor schedulers adapted to multiprocessor</strong></dt>
+<dd><ul class="first last simple">
+<li>Global-EDF</li>
+<li>Global-RM</li>
+<li>Earliest Deadline Zero Laxity (EDZL)</li>
+<li>Least Laxity First (LLF)</li>
+<li>Modified Least Laxity First (MLLF): A Modified Least-Laxity-First Scheduling Algorithm for Real-Time Tasks by S.-H. Oh and S.-M. Yang.</li>
+<li>PriD: Real-time scheduling on multiprocessors by J., Baruah, S., &amp; Funk, S.</li>
+<li>EDF-US</li>
+<li>G-FL: Fair lateness scheduling: Reducing maximum lateness in G-EDF-like scheduling by Erickson and Anderson.</li>
+</ul>
+</dd>
+<dt><strong>Partitionned</strong></dt>
+<dd><p class="first">Any uniprocessor scheduler using a partitionning algorithm. The following heuristics are provided:</p>
+<ul class="last simple">
+<li>First-Fit and Decreasing-First-Fit</li>
+<li>Next-Fit and Decreasing-Next-Fit</li>
+<li>Best-Fit and Decreasing-Best-Fit</li>
+<li>Worst-Fit and Decreasing-Worst-Fit</li>
+</ul>
+</dd>
+<dt><strong>PFair</strong></dt>
+<dd><ul class="first last simple">
+<li>Earliest Pseudo-Deadline First (EPDF)</li>
+<li>PD2 and ER-PD2: Early-Release Fair Scheduling. In Proceedings of the Euromicro Conference on Real-Time Systems by J. H. Anderson et al.</li>
+</ul>
+</dd>
+<dt><strong>DPFair</strong></dt>
+<dd><ul class="first last simple">
+<li>LLREF: An Optimal Real-Time Scheduling Algorithm for Multiprocessors by Cho et al.</li>
+<li>LRE-TL:  An Optimal Multiprocessor Scheduling Algorithm for Sporadic Task Sets by S. Funk et al.</li>
+<li>DP-WRAP: DP-FAIR: A Simple Model for Understanding Optimal Multiprocessor Scheduling by Levin et al.</li>
+<li>BF: Multiple-resource periodic scheduling problem: how much fairness is necessary? by Zhu et al.</li>
+<li>NVNLF: Work-Conversing Optimal Real-Time Scheduling on Multiprocessors by Funaoka et al.</li>
+</ul>
+</dd>
+<dt><strong>Semi-partitionned</strong></dt>
+<dd><ul class="first last simple">
+<li>EKG:  Multiprocessor Scheduling with Few Preemptions by B. Andersson and E. Tovar.</li>
+<li>EDHS: Semi-Partitioning Technique for Multiprocessor Real-Time Scheduling by Kato et al.</li>
+</ul>
+</dd>
+<dt><strong>Other</strong></dt>
+<dd><ul class="first last simple">
+<li>RUN: Optimal Multiprocessor Real-Time Scheduling via Reduction to Uniprocessor by Regnier et al.</li>
+<li>U-EDF: an Unfair but Optimal Multiprocessor Scheduling Algorithm for Sporadic Tasks by Nelissen et al.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="SimSo documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

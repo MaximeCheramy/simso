@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to write a scheduling policy &mdash; SimSo documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SimSo documentation" href="index.html" />
+    <link rel="next" title="Using SimSo in script mode" href="text_mode.html" />
+    <link rel="prev" title="Frequently Asked Questions" href="faq.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-write-a-scheduling-policy">
+<h1><a class="toc-backref" href="#id1">How to write a scheduling policy</a><a class="headerlink" href="#how-to-write-a-scheduling-policy" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial explains through minimalist examples how to write a scheduler.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#how-to-write-a-scheduling-policy" id="id1">How to write a scheduling policy</a><ul>
+<li><a class="reference internal" href="#example-1-uniprocessor-edf" id="id2">Example 1: uniprocessor EDF</a><ul>
+<li><a class="reference internal" href="#creation-of-the-file" id="id3">Creation of the file</a></li>
+<li><a class="reference internal" href="#explanation-of-the-skeleton" id="id4">Explanation of the skeleton</a></li>
+<li><a class="reference internal" href="#implementation" id="id5">Implementation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-2-partitionned-edf" id="id6">Example 2: Partitionned EDF</a><ul>
+<li><a class="reference internal" href="#initializing-the-scheduler" id="id7">Initializing the scheduler</a></li>
+<li><a class="reference internal" href="#defining-the-packing" id="id8">Defining the packing</a></li>
+<li><a class="reference internal" href="#complete-example" id="id9">Complete example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="example-1-uniprocessor-edf">
+<h2><a class="toc-backref" href="#id2">Example 1: uniprocessor EDF</a><a class="headerlink" href="#example-1-uniprocessor-edf" title="Permalink to this headline">¶</a></h2>
+<p>This example shows how to write an Earliest Deadline First scheduler for a single processor. As a reminder, the Earliest Deadline First prioritizes the tasks with the closest absolute deadline among all the ready tasks. A task is ready when it is activated and not finished.</p>
+<div class="section" id="creation-of-the-file">
+<h3><a class="toc-backref" href="#id3">Creation of the file</a><a class="headerlink" href="#creation-of-the-file" title="Permalink to this headline">¶</a></h3>
+<p>A scheduler for SimSo is a Python class that inherits from the <a class="reference internal" href="modules.html#module-simso.core.Scheduler" title="simso.core.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">simso.core.Scheduler</span></tt></a> class. The first step is to write the skeleton of our scheduler. Create a file named &#8220;EDF_mono.py&#8221; and write the following code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">simso.core</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+
+<span class="k">class</span> <span class="nc">EDF_mono</span><span class="p">(</span><span class="n">Scheduler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">on_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">on_terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>It is mandatory for the class name to be identical to the file name.</p>
+</div>
+<div class="section" id="explanation-of-the-skeleton">
+<h3><a class="toc-backref" href="#id4">Explanation of the skeleton</a><a class="headerlink" href="#explanation-of-the-skeleton" title="Permalink to this headline">¶</a></h3>
+<p>The first thing done here is importing the <a class="reference internal" href="modules.html#module-simso.core.Scheduler" title="simso.core.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> class. Then we define the <cite>EDF_mono</cite> class as a subclass of the <cite>Scheduler</cite>.</p>
+<p>Four methods are redifined:</p>
+<ul class="simple">
+<li>The <a class="reference internal" href="modules.html#simso.core.Scheduler.Scheduler.init" title="simso.core.Scheduler.Scheduler.init"><tt class="xref py py-meth docutils literal"><span class="pre">init</span></tt></a> method is called when the simulation is ready to start, this is where the structures used by the scheduler should be initialized. The usual Python constructor is not guaranteed to be called before each simulation run and the <a class="reference internal" href="modules.html#simso.core.Task.Task" title="simso.core.Task.Task"><tt class="xref py py-class docutils literal"><span class="pre">Task</span></tt></a> and <a class="reference internal" href="modules.html#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><tt class="xref py py-class docutils literal"><span class="pre">Processors</span></tt></a> are not instantiated yet when the scheduler is created.</li>
+<li>The <a class="reference internal" href="modules.html#simso.core.Scheduler.Scheduler.on_activate" title="simso.core.Scheduler.Scheduler.on_activate"><tt class="xref py py-meth docutils literal"><span class="pre">on_activate</span></tt></a> method is called on task activations.</li>
+<li>The <a class="reference internal" href="modules.html#simso.core.Scheduler.Scheduler.on_terminated" title="simso.core.Scheduler.Scheduler.on_terminated"><tt class="xref py py-meth docutils literal"><span class="pre">on_terminated</span></tt></a> method is called when a job finished its execution.</li>
+<li>The <a class="reference internal" href="modules.html#simso.core.Scheduler.Scheduler.schedule" title="simso.core.Scheduler.Scheduler.schedule"><tt class="xref py py-meth docutils literal"><span class="pre">schedule</span></tt></a> method is called by the processor when it needs to run the scheduler. This method should not be called directly.</li>
+</ul>
+</div>
+<div class="section" id="implementation">
+<h3><a class="toc-backref" href="#id5">Implementation</a><a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h3>
+<p>In a nutshell, the algorithm is the following: a list of ready jobs is kept up-to-date using the <cite>on_activate</cite> and <cite>on_terminated</cite> methods. When the schedule method is called, the ready job with the closest absolute deadline is chosen.</p>
+<p>So, the first step is to define a <cite>ready_list</cite>, and to append the jobs and remove them respectively when the jobs are activated and when they finish. The code should looks like that:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">core</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+
+<span class="k">class</span> <span class="nc">EDF_mono</span><span class="p">(</span><span class="n">Scheduler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">on_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>The second step is to write the schedule logic. Selecting the job with the closest absolute deadline is pretty easy. But we need to be sure that there is at least one ready job. One possible implementation is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="p">:</span>  <span class="c"># If at least one job is ready:</span>
+        <span class="c"># job with the highest priority</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">absolute_deadline</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">job</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">cpu</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At this point, we are still missing a very important thing: calling the scheduler! This is not done by invoking the <cite>schedule</cite> method. As a reminder, that&#8217;s the processor which is responsible to call the <cite>scheduler</cite>. The reason is that if an overhead must be applied, it is done on the processor running the scheduler. The good way to call the scheduler is by sending a message to the processor using the <a class="reference internal" href="modules.html#simso.core.Processor.Processor.resched" title="simso.core.Processor.Processor.resched"><tt class="xref py py-meth docutils literal"><span class="pre">resched</span></tt></a> method.</p>
+<p>Any job is affected to a processor. This is the last processor on which the task was running or an arbitrary processor on the first execution. The scheduler can be called indirectly using <tt class="docutils literal"><span class="pre">job.cpu.resched()</span></tt> when a scheduling event occurs. We could also use <tt class="docutils literal"><span class="pre">self.processors[0].resched</span></tt> to run the scheduler on the first (and only) processor of the system.</p>
+<p>This is the full code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">simso.core</span> <span class="kn">import</span> <span class="n">Scheduler</span>
+
+
+<span class="k">class</span> <span class="nc">EDF_mono</span><span class="p">(</span><span class="n">Scheduler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">on_activate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+        <span class="n">job</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">resched</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_terminated</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">job</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+        <span class="n">job</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">resched</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cpu</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="p">:</span>  <span class="c"># If at least one job is ready:</span>
+            <span class="c"># job with the highest priority</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ready_list</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">absolute_deadline</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">job</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">cpu</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="example-2-partitionned-edf">
+<h2><a class="toc-backref" href="#id6">Example 2: Partitionned EDF</a><a class="headerlink" href="#example-2-partitionned-edf" title="Permalink to this headline">¶</a></h2>
+<p>The simplest method to handle multiprocessor architectures is to use partitionning. This approach consists in allocating the tasks to the processors and executing a mono-processor scheduler on each processor.</p>
+<p>In order to ease the work for the developer of a scheduler, an helping class, named <a class="reference internal" href="modules.html#module-simso.utils.PartitionedScheduler" title="simso.utils.PartitionedScheduler"><tt class="xref py py-class docutils literal"><span class="pre">PartitionedScheduler</span></tt></a>, is provided.</p>
+<div class="section" id="initializing-the-scheduler">
+<h3><a class="toc-backref" href="#id7">Initializing the scheduler</a><a class="headerlink" href="#initializing-the-scheduler" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="modules.html#module-simso.utils.PartitionedScheduler" title="simso.utils.PartitionedScheduler"><tt class="xref py py-class docutils literal"><span class="pre">PartitionedScheduler</span></tt></a> is defined in the <cite>simso.utils</cite> module. It is also necessary to load the <a class="reference internal" href="modules.html#simso.core.Scheduler.SchedulerInfo" title="simso.core.Scheduler.SchedulerInfo"><tt class="xref py py-class docutils literal"><span class="pre">SchedulerInfo</span></tt></a> class in order to give to the <cite>PartitionedScheduler &lt;simso.utils.PartitionedScheduler&gt;</cite> the mono-processor scheduler to use. The first thing to do is importing these classes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">simso.utils</span> <span class="kn">import</span> <span class="n">PartitionedScheduler</span>
+<span class="kn">from</span> <span class="nn">simso.core.Scheduler</span> <span class="kn">import</span> <span class="n">SchedulerInfo</span>
+</pre></div>
+</div>
+<p>Then the Scheduler can be initialized like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">P_EDF</span><span class="p">(</span><span class="n">PartitionedScheduler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">PartitionedScheduler</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SchedulerInfo</span><span class="p">(</span><span class="s">&quot;EDF_mono&quot;</span><span class="p">,</span> <span class="n">EDF_mono</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-the-packing">
+<h3><a class="toc-backref" href="#id8">Defining the packing</a><a class="headerlink" href="#defining-the-packing" title="Permalink to this headline">¶</a></h3>
+<p>A First-Fit bin-packing can be used to affect the tasks to the processors. For that, the <tt class="xref py py-meth docutils literal"><span class="pre">packer()</span></tt> must be overriden:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">packer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c"># First Fit</span>
+    <span class="n">cpus</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cpu</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">cpu</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># Find a processor with free space.</span>
+        <span class="k">while</span> <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">wcet</span><span class="p">)</span> <span class="o">/</span> <span class="n">task</span><span class="o">.</span><span class="n">period</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;oops bin packing failed.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="c"># Affect it to the task.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">affect_task_to_processor</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c"># Update utilization.</span>
+        <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">wcet</span><span class="p">)</span> <span class="o">/</span> <span class="n">task</span><span class="o">.</span><span class="n">period</span>
+    <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="complete-example">
+<h3><a class="toc-backref" href="#id9">Complete example</a><a class="headerlink" href="#complete-example" title="Permalink to this headline">¶</a></h3>
+<p>Complete source code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">simso.core.Scheduler</span> <span class="kn">import</span> <span class="n">SchedulerInfo</span>
+<span class="kn">from</span> <span class="nn">EDF_mono</span> <span class="kn">import</span> <span class="n">EDF_mono</span>
+<span class="kn">from</span> <span class="nn">simso.utils</span> <span class="kn">import</span> <span class="n">PartitionedScheduler</span>
+
+
+<span class="k">class</span> <span class="nc">P_EDF</span><span class="p">(</span><span class="n">PartitionedScheduler</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">PartitionedScheduler</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SchedulerInfo</span><span class="p">(</span><span class="s">&quot;EDF_mono&quot;</span><span class="p">,</span> <span class="n">EDF_mono</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">packer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># First Fit</span>
+        <span class="n">cpus</span> <span class="o">=</span> <span class="p">[[</span><span class="n">cpu</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">cpu</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="c"># Find a processor with free space.</span>
+            <span class="k">while</span> <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">wcet</span><span class="p">)</span> <span class="o">/</span> <span class="n">task</span><span class="o">.</span><span class="n">period</span> <span class="o">&gt;</span> <span class="mf">1.0</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processors</span><span class="p">):</span>
+                    <span class="k">print</span><span class="p">(</span><span class="s">&quot;oops bin packing failed.&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">False</span>
+
+            <span class="c"># Affect it to the task.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">affect_task_to_processor</span><span class="p">(</span><span class="n">task</span><span class="p">,</span> <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="c"># Update utilization.</span>
+            <span class="n">cpus</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">wcet</span><span class="p">)</span> <span class="o">/</span> <span class="n">task</span><span class="o">.</span><span class="n">period</span>
+        <span class="k">return</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="Frequently Asked Questions"
+             >previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

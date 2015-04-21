@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using SimSo in script mode &mdash; SimSo documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="SimSo documentation" href="index.html" />
+    <link rel="next" title="Main modules" href="modules.html" />
+    <link rel="prev" title="How to write a scheduling policy" href="write_scheduler.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Main modules"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="write_scheduler.html" title="How to write a scheduling policy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="using-simso-in-script-mode">
+<h1><a class="toc-backref" href="#id1">Using SimSo in script mode</a><a class="headerlink" href="#using-simso-in-script-mode" title="Permalink to this headline">¶</a></h1>
+<p>SimSo can be used as a library in order to automatize wide experimentations and have a maximum of flexibility on the analysis of the results. In this tutorial, a few examples are provided.</p>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title first">Table of Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#using-simso-in-script-mode" id="id1">Using SimSo in script mode</a><ul>
+<li><a class="reference internal" href="#loading-a-configuration-using-a-simulation-file" id="id2">Loading a configuration using a simulation file</a></li>
+<li><a class="reference internal" href="#creating-a-configuration-from-scratch" id="id3">Creating a configuration from scratch</a></li>
+<li><a class="reference internal" href="#creating-the-model" id="id4">Creating the Model</a></li>
+<li><a class="reference internal" href="#first-example" id="id5">First Example</a></li>
+<li><a class="reference internal" href="#more-details" id="id6">More details</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="loading-a-configuration-using-a-simulation-file">
+<h2><a class="toc-backref" href="#id2">Loading a configuration using a simulation file</a><a class="headerlink" href="#loading-a-configuration-using-a-simulation-file" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference internal" href="modules.html#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><tt class="xref py py-class docutils literal"><span class="pre">Configuration</span></tt></a> can be initialized with a file passed to its constructor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The configuration could also be partial and completed by the script. Finally, the configuration can be checked for correctness using the <tt class="xref py py-meth docutils literal"><span class="pre">check_all</span></tt> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">check_all</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This method will raise an exception if something is not correct.</p>
+</div>
+<div class="section" id="creating-a-configuration-from-scratch">
+<h2><a class="toc-backref" href="#id3">Creating a configuration from scratch</a><a class="headerlink" href="#creating-a-configuration-from-scratch" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to create a new configuration from an empty configuration. This is done by instantiating a <a class="reference internal" href="modules.html#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><tt class="xref py py-class docutils literal"><span class="pre">Configuration</span></tt></a> object without argument. Then, its attributes can be changed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
+
+<span class="n">configuration</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">configuration</span><span class="o">.</span><span class="n">cycles_per_ms</span>
+</pre></div>
+</div>
+<p>It is also possible to add tasks:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;T1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                       <span class="n">activation_date</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wcet</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">deadline</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And of course processors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">add_processor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;CPU 1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, a scheduler is also required:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;examples/RM.py&quot;</span><span class="p">,</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">cur_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-the-model">
+<h2><a class="toc-backref" href="#id4">Creating the Model</a><a class="headerlink" href="#creating-the-model" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference internal" href="modules.html#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><tt class="xref py py-class docutils literal"><span class="pre">configuration</span></tt></a> is an object grouping every characteristics of the system (tasks, processors, schedulers, etc). Such a configuration can be passed to the <a class="reference internal" href="modules.html#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> constructor in order to create the simulation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And the simulation can be run with the <a class="reference internal" href="modules.html#simso.core.Model.Model.run_model" title="simso.core.Model.Model.run_model"><tt class="xref py py-meth docutils literal"><span class="pre">run_model</span></tt></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">model</span><span class="o">.</span><span class="n">run_model</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Some basic logs can be get through the <a class="reference internal" href="modules.html#simso.core.Model.Model.logs" title="simso.core.Model.Model.logs"><tt class="xref py py-meth docutils literal"><span class="pre">logs</span></tt></a> attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">logs</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="first-example">
+<h2><a class="toc-backref" href="#id5">First Example</a><a class="headerlink" href="#first-example" title="Permalink to this headline">¶</a></h2>
+<p>The following script simulate a system loading from a simulation file or configured from scratch:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">simso.core</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">simso.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c"># Configuration load from a file.</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Manual configuration:</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
+
+        <span class="n">configuration</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="mi">420</span> <span class="o">*</span> <span class="n">configuration</span><span class="o">.</span><span class="n">cycles_per_ms</span>
+
+        <span class="c"># Add tasks:</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;T1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+                               <span class="n">activation_date</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wcet</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">deadline</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;T2&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                               <span class="n">activation_date</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wcet</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">deadline</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;T3&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                               <span class="n">activation_date</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">wcet</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">deadline</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+        <span class="c"># Add a processor:</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">add_processor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;CPU 1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Add a scheduler:</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;examples/RM.py&quot;</span><span class="p">,</span>
+                <span class="n">configuration</span><span class="o">.</span><span class="n">cur_dir</span><span class="p">)</span>
+
+    <span class="c"># Check the config before trying to run it.</span>
+    <span class="n">configuration</span><span class="o">.</span><span class="n">check_all</span><span class="p">()</span>
+
+    <span class="c"># Init a model from the configuration.</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span>
+
+    <span class="c"># Execute the simulation.</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">run_model</span><span class="p">()</span>
+
+    <span class="c"># Print logs.</span>
+    <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">logs</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="more-details">
+<h2><a class="toc-backref" href="#id6">More details</a><a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to get more information from the tasks using <a class="reference internal" href="modules.html#simso.core.results.Results" title="simso.core.results.Results"><tt class="xref py py-class docutils literal"><span class="pre">Results</span></tt></a> class. For example we could get the computation time of the jobs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">tasks</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">jobs</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%.3f</span><span class="s"> ms&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">job</span><span class="o">.</span><span class="n">computation_time</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Or the number of preemptions per task:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">task_list</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">task</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">sum</span><span class="p">([</span><span class="n">job</span><span class="o">.</span><span class="n">preemption_count</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">jobs</span><span class="p">])))</span>
+</pre></div>
+</div>
+<p>You can get all the metrics provided in the <a class="reference internal" href="modules.html#simso.core.results.TaskR" title="simso.core.results.TaskR"><tt class="xref py py-class docutils literal"><span class="pre">TaskR</span></tt></a> and <a class="reference internal" href="modules.html#simso.core.results.JobR" title="simso.core.results.JobR"><tt class="xref py py-class docutils literal"><span class="pre">JobR</span></tt></a> objects. Read the documentation of these classes to know exactly what is directly accessible.</p>
+<p>It is also possible to get the monitor object from each processors. This is a very detail history of the system. For example, you can count the number of context switches, where a context switch is something that happen when the previous task running on the same processor is different:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cxt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">processor</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">processors</span><span class="p">:</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">for</span> <span class="n">evt</span> <span class="ow">in</span> <span class="n">processor</span><span class="o">.</span><span class="n">monitor</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">evt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">event</span> <span class="o">==</span> <span class="n">ProcEvent</span><span class="o">.</span><span class="n">RUN</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">prev</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">prev</span> <span class="o">!=</span> <span class="n">evt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span>
+                <span class="n">cxt</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">evt</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">identifier</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Number of context switches (without counting the OS): &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cxt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Main modules"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="write_scheduler.html" title="How to write a scheduling policy"
+             >previous</a> |</li>
+        <li><a href="index.html">SimSo documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>
