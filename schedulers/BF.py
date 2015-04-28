@@ -2,15 +2,17 @@
 Implementation of the BF algorithm.
 """
 from simso.core import Scheduler, Timer
+import sympy
 
 
 class BF(Scheduler):
     def init(self):
         self.t_f = 0
         self.waiting_schedule = False
-        self.mirroring = False
         self.allocations = []
         self.timers = {}
+        self.rw = {t.identifier: 0 for t in self.task_list}
+        self.pw = {}
 
     def reschedule(self, cpu=None):
         """
@@ -54,7 +56,7 @@ class BF(Scheduler):
             return -1
         elif ai < aj:
             return 1
-        elif ai == 0:
+        elif ai == 0 == aj:
             return -1
         elif ai == -1:
             if self.uf_plus_one(job_i) > self.uf_plus_one(job_j):
@@ -77,33 +79,58 @@ class BF(Scheduler):
                        * self.sim.cycles_per_ms)
         # Duration that can be allocated for each processor.
         w = int(self.t_f - self.sim.now())
+        available = w * len(self.processors)
+
         p = 0  # Processor id.
         mand = {}
-        available = w * len(self.processors)
         eligible = []
 
+        print("{:#^60}".format(
+            " Scheduling Interval [{},{}) ".format(self.sim.now()/self.sim.cycles_per_ms,
+                self.t_f/self.sim.cycles_per_ms)))
         for task in self.task_list:
-            job = task.job
-            if not job.is_active():
+            if not task.job.is_active():
+                self.rw[task.identifier]=0
+                self.pw[task.identifier]=0
                 continue
 
-            fluid = (self.sim.now() - job.activation_date *
-                     self.sim.cycles_per_ms) * job.wcet / job.period
-            lag = fluid - job.computation_time_cycles
-            mand[task.identifier] = max(0,
-                                        int(lag + w * job.wcet / job.period))
+            rw = self.rw[task.identifier]
+            m_pure = (rw + ((w * task.job.wcet) /
+                task.job.period))/self.sim.cycles_per_ms
+            m_pure = sympy.nsimplify(m_pure)
+            m = int(m_pure)
+            self.pw[task.identifier] = m_pure-m
+            mand[task.identifier] = max(0, m*self.sim.cycles_per_ms)
+
+            print("rw: {:>4}".format(rw))
+            print("{}:, w: {},  m_pure: {:>4}, m: {:>2}, pw: {:>4}, mand: {}".format(
+                task.name, w/self.sim.cycles_per_ms, m_pure, m,
+                self.pw[task.identifier], mand[task.identifier]))
+
             available -= mand[task.identifier]
-            if mand[task.identifier] < w:
+            if mand[task.identifier] < w and  self.pw[task.identifier] > 0:
                 eligible.append(task)
 
-        while available > 0 and eligible:
-            job_m = None
-            for task in eligible:
-                if job_m is None or self.compare(task.job, job_m) == -1:
-                    job_m = task.job
-            mand[job_m.task.identifier] += 1
-            eligible.remove(job_m.task)
-            available -= 1
+            self.rw[task.identifier] = self.pw[task.identifier]*self.sim.cycles_per_ms
+
+        print("{:#^60}".format(" Done "))
+
+        while available >= self.sim.cycles_per_ms and eligible:
+            task_m = eligible[0]
+            for task_e in eligible[1:]:
+                result = self.compare(task_m.job, task_e.job)
+
+                if result == -1:
+                    pass
+                elif result == 1:
+                    task_m = task_e
+                else:
+                    print("Warning: Couldn't find task for optional unit!")
+
+            mand[task_m.identifier] += self.sim.cycles_per_ms
+            available -= self.sim.cycles_per_ms
+            self.rw[task_m.identifier] -= self.sim.cycles_per_ms
+            eligible.remove(task_m)
 
         for task in self.task_list:
             # The "fair" duration for this job on that interval. Rounded to the
@@ -132,8 +159,8 @@ class BF(Scheduler):
                     # Because every durations are rounded to the upper value,
                     # the last job may have not enough space left.
                     # This could probably be improved.
-                    print("Warning: didn't allowed enough time to last task.",
-                          duration - duration1)
+                    print("Warning: didn't allowed enough time to %s (%d)." %
+                          (task.name, duration - duration1))
                     break
 
                 p += 1
@@ -141,13 +168,6 @@ class BF(Scheduler):
         for allocation in self.allocations:
             if allocation[0] < w:
                 allocation[1].append((None, w - allocation[0]))
-
-        if self.mirroring:
-            for allocation in self.allocations:
-                # Rerverse the order of the jobs.
-                # Note: swapping the first and last items should be enough.
-                allocation[1].reverse()
-        self.mirroring = not self.mirroring
 
     def end_event(self, z, job):
         """
