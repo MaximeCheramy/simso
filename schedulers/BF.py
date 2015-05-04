@@ -88,12 +88,13 @@ class BF(Scheduler):
         eligible = []
 
         print("{:#^60}".format(
-            " Scheduling Interval [{},{}) ".format(self.sim.now()/self.sim.cycles_per_ms,
-                self.t_f/self.sim.cycles_per_ms)))
+            " Scheduling Interval [{},{}) ".format(
+                self.sim.now() / self.sim.cycles_per_ms,
+                self.t_f / self.sim.cycles_per_ms)))
         for task in self.task_list:
             if not task.job.is_active():
-                self.rw[task.identifier]=0
-                self.pw[task.identifier]=0
+                self.rw[task.identifier] = 0
+                self.pw[task.identifier] = 0
                 continue
 
             rw = self.rw[task.identifier]
@@ -101,8 +102,8 @@ class BF(Scheduler):
                        / Fraction(task.job.period))
                       / Fraction(self.sim.cycles_per_ms))
             m = int(m_pure)
-            self.pw[task.identifier] = m_pure-m
-            mand[task.identifier] = max(0, m*self.sim.cycles_per_ms)
+            self.pw[task.identifier] = m_pure - m
+            mand[task.identifier] = max(0, m * self.sim.cycles_per_ms)
 
 #            print("rw: {:>4}".format(rw))
 #            print("{}:, w: {},  m_pure: {:>4}, m: {:>2}, pw: {:>4}, mand: {}".format(
@@ -110,10 +111,11 @@ class BF(Scheduler):
 #                self.pw[task.identifier], mand[task.identifier]))
 
             available -= mand[task.identifier]
-            if mand[task.identifier] < w and  self.pw[task.identifier] > 0:
+            if mand[task.identifier] < w and self.pw[task.identifier] > 0:
                 eligible.append(task)
 
-            self.rw[task.identifier] = self.pw[task.identifier]*self.sim.cycles_per_ms
+            self.rw[task.identifier] = \
+                self.pw[task.identifier] * self.sim.cycles_per_ms
 
         print("{:#^60}".format(" Done "))
 
