@@ -2,7 +2,7 @@
 Implementation of the BF algorithm.
 """
 from simso.core import Scheduler, Timer
-import sympy
+from fractions import Fraction
 
 
 class BF(Scheduler):
@@ -95,17 +95,17 @@ class BF(Scheduler):
                 continue
 
             rw = self.rw[task.identifier]
-            m_pure = (rw + ((w * task.job.wcet) /
-                task.job.period))/self.sim.cycles_per_ms
-            m_pure = sympy.nsimplify(m_pure)
+            m_pure = ((Fraction(rw) + Fraction(w * task.job.wcet)
+                       / Fraction(task.job.period))
+                      / Fraction(self.sim.cycles_per_ms))
             m = int(m_pure)
             self.pw[task.identifier] = m_pure-m
             mand[task.identifier] = max(0, m*self.sim.cycles_per_ms)
 
-            print("rw: {:>4}".format(rw))
-            print("{}:, w: {},  m_pure: {:>4}, m: {:>2}, pw: {:>4}, mand: {}".format(
-                task.name, w/self.sim.cycles_per_ms, m_pure, m,
-                self.pw[task.identifier], mand[task.identifier]))
+#            print("rw: {:>4}".format(rw))
+#            print("{}:, w: {},  m_pure: {:>4}, m: {:>2}, pw: {:>4}, mand: {}".format(
+#                task.name, w/self.sim.cycles_per_ms, m_pure, m,
+#                self.pw[task.identifier], mand[task.identifier]))
 
             available -= mand[task.identifier]
             if mand[task.identifier] < w and  self.pw[task.identifier] > 0:
