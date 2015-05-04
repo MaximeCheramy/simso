@@ -1,5 +1,7 @@
 """
 Implementation of the BF algorithm.
+
+Authors: Maxime Chéramy and Stefan Junker
 """
 from simso.core import Scheduler, Timer
 from fractions import Fraction
