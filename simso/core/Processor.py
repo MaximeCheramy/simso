@@ -11,7 +11,8 @@ ACTIVATE = 2
 TERMINATE = 3
 TIMER = 4
 MIGRATE = 5
-SPEED = 6
+PREEMPT = 6
+SPEED = 7
 
 
 class ProcInfo(object):
@@ -91,9 +92,8 @@ class Processor(Process):
         self._running = None
 
     def preempt(self):
-        if MIGRATE not in self._evts:
-            self._evts.append(("preempt",))
-            self._running = None
+        self._evts.append((PREEMPT,))
+        self._running = None
 
     def timer(self, timer):
         self._evts.append((TIMER, timer))
@@ -197,9 +197,7 @@ class Processor(Process):
                     yield hold, self, evt[1].overhead
                 evt[1].call_handler()
             elif evt[0] == MIGRATE:
-                self._running = evt[1]
                 self.monitor.observe(ProcOverheadEvent("Migration"))
-                #yield hold, self, self._migration_overhead #overhead migration
             elif evt[0] == SPEED:
                 self._speed = evt[1]
             elif evt[0] == RESCHED:
@@ -227,6 +225,7 @@ class Processor(Process):
 
                     # if the job was running somewhere else, stop it.
                     if job and job.cpu.running == job:
+                        job.cpu.evts = [e for e in self._evts if e[0] != MIGRATE]
                         job.cpu.preempt()
 
                     # Send that job to processor cpu.
