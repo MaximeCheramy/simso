@@ -10,23 +10,24 @@ class PriD(Scheduler):
     """EDF(k) scheduler"""
     def init(self):
         self.ready_list = []
-        self.kfirst = []
+        self.km1first = []
 
         tasks = sorted(self.task_list, key=lambda x: -x.wcet / x.period)
         kmin = 1
         mmin = None
         u = sum(x.wcet / x.period for x in tasks)
-        for k, task in enumerate(tasks):
+        for km1, task in enumerate(tasks):
             u -= task.wcet / task.period
-            m = k + ceil(u / (1 - task.wcet / task.period))
+            m = km1 + ceil(u / (1 - task.wcet / task.period))
             if mmin is None or mmin > m:
-                kmin = k + 1
+                kmin = km1 + 1
                 mmin = m
 
-        self.kfirst = tasks[:kmin]
+        # The k-1 first tasks are given the highest priority.
+        self.km1first = tasks[:kmin - 1]
 
     def on_activate(self, job):
-        if job.task in self.kfirst:
+        if job.task in self.km1first:
             job.priority = 0
         else:
             job.priority = job.absolute_deadline
