@@ -15,7 +15,7 @@ class SchedulerInfo(object):
     SchedulerInfo groups the data that characterize a Scheduler (such as the
     scheduling overhead) and do the dynamic loading of the scheduler.
     """
-    def __init__(self, name='', cls=None, overhead=0, overhead_activate=0,
+    def __init__(self, name='', overhead=0, overhead_activate=0,
                  overhead_terminate=0, fields=None):
         """
         Args:
@@ -27,7 +27,6 @@ class SchedulerInfo(object):
         """
         self._name = name
         self._filename = None
-        self._cls = cls
         self.overhead = overhead
         self.overhead_activate = overhead_activate
         self.overhead_terminate = overhead_terminate
@@ -86,14 +85,14 @@ class SchedulerInfo(object):
                 fp, pathname, description = imp.find_module(name, [path])
                 if path not in sys.path:
                     sys.path.append(path)
-                self._cls = getattr(imp.load_module(name, fp, pathname,
-                                                    description), name)
+                clas = getattr(imp.load_module(name, fp, pathname,
+                                               description), name)
                 fp.close()
+                return clas
             except ImportError as e:
                 print("ImportError: ", e)
                 print("name: ", name, "path: ", path)
-
-        return self._cls
+                return None
 
     def instantiate(self, model):
         """
@@ -103,8 +102,9 @@ class SchedulerInfo(object):
             - `model`: The :class:`Model <simso.core.Model.Model>` object \
             that is passed to the constructor.
         """
-        cls = self.get_cls()
-        return cls(model, self)
+        clas = self.get_cls()
+        if clas:
+            return clas(model, self)
 
 
 class Scheduler(object):
