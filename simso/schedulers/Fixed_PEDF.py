@@ -2,7 +2,7 @@
 # coding=utf-8
 
 from simso.core.Scheduler import SchedulerInfo
-from EDF_mono import EDF_mono
+from simso.schedulers.EDF_mono import EDF_mono
 from simso.utils import PartitionedScheduler
 
 

@@ -8,8 +8,8 @@ tasks with implicit deadlines.
 """
 
 from simso.core import Scheduler, Timer
-from RUNServer import EDFServer, TaskServer, DualServer, select_jobs, \
-    add_job, get_child_tasks
+from simso.schedulers.RUNServer import EDFServer, TaskServer, DualServer, \
+    select_jobs, add_job, get_child_tasks
 
 
 class RUN(Scheduler):

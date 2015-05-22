@@ -5,7 +5,7 @@ Use EDF_mono.
 """
 from simso.core import Scheduler
 from simso.core.Scheduler import SchedulerInfo
-from EDF_mono import EDF_mono
+from simso.schedulers.EDF_mono import EDF_mono
 
 
 class P_EDF2(Scheduler):

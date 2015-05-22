@@ -2,7 +2,7 @@
 Work-Conserving version of U-EDF.
 """
 
-from RUN import RUN
+from simso.schedulers.RUN import RUN
 
 
 class WC_RUN(RUN):

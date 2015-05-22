@@ -2,7 +2,7 @@
 Partitionned EDF using PartitionedScheduler.
 """
 from simso.core.Scheduler import SchedulerInfo
-from RM_mono import RM_mono
+from simso.schedulers.RM_mono import RM_mono
 from simso.utils import PartitionedScheduler
 
 
