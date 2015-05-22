@@ -2,6 +2,9 @@ from __future__ import print_function
 import sys
 import imp
 import os.path
+import importlib
+import pkgutil
+import inspect
 
 from simso.core.SchedulerEvent import SchedulerBeginScheduleEvent, \
     SchedulerEndScheduleEvent, SchedulerBeginActivateEvent, \
@@ -15,7 +18,7 @@ class SchedulerInfo(object):
     SchedulerInfo groups the data that characterize a Scheduler (such as the
     scheduling overhead) and do the dynamic loading of the scheduler.
     """
-    def __init__(self, name='', overhead=0, overhead_activate=0,
+    def __init__(self, clas='', overhead=0, overhead_activate=0,
                  overhead_terminate=0, fields=None):
         """
         Args:
@@ -25,8 +28,8 @@ class SchedulerInfo(object):
 
         Methods:
         """
-        self._name = name
-        self._filename = None
+        self.filename = ''
+        self.clas = clas
         self.overhead = overhead
         self.overhead_activate = overhead_activate
         self.overhead_terminate = overhead_terminate
@@ -43,56 +46,35 @@ class SchedulerInfo(object):
             self.data[key] = value[0]
             self.fields_types[key] = value[1]
 
-    def set_name(self, filename, cur_dir=None):
-        """
-        Set the scheduler from a file.
-
-        Args:
-            - `filename`: relative path to the Python source containing the \
-            Scheduler.
-            - `cur_dir`: current directory. Used to set the name relatively \
-            to the simulation file.
-        """
-        if cur_dir is None:
-            cur_dir = os.curdir
-        self._name = os.path.relpath(filename, cur_dir)
-        self._filename = filename
-
-    @property
-    def name(self):
-        """
-        The name of the Scheduler (its relative path to the XML).
-        """
-        return self._name
-
-    @property
-    def filename(self):
-        """
-        Path of the scheduler (absolute or relative to simso's working
-        directory).
-        """
-        return self._filename
-
     def get_cls(self):
         """
         Get the class of this scheduler.
         """
-        if self._filename:
-            (path, name) = os.path.split(self._filename)
-            name = os.path.splitext(name)[0]
+        try:
+            clas = None
+            if self.clas:
+                name = self.clas.rsplit('.', 1)[1]
+                importlib.import_module(self.clas)
+                clas = getattr(importlib.import_module(self.clas), name)
+            elif self.filename:
+                path, name = os.path.split(self.filename)
+                name = os.path.splitext(name)[0]
 
-            try:
                 fp, pathname, description = imp.find_module(name, [path])
                 if path not in sys.path:
                     sys.path.append(path)
                 clas = getattr(imp.load_module(name, fp, pathname,
                                                description), name)
                 fp.close()
-                return clas
-            except ImportError as e:
-                print("ImportError: ", e)
-                print("name: ", name, "path: ", path)
-                return None
+
+            return clas
+        except Exception as e:
+            print("ImportError: ", e)
+            if self.clas:
+                print("Class: {}".format(self.clas))
+            else:
+                print("Path: {}".format(self.filename))
+            return None
 
     def instantiate(self, model):
         """
@@ -256,3 +238,17 @@ class Scheduler(object):
 
     def monitor_end_terminate(self, cpu):
         self.monitor.observe(SchedulerEndTerminateEvent(cpu))
+
+
+def get_schedulers():
+    package = importlib.import_module('simso.schedulers')
+    for importer, modname, ispkg in pkgutil.walk_packages(
+            path=package.__path__,
+            prefix=package.__name__ + '.',
+            onerror=lambda x: None):
+        m = importlib.import_module(modname)
+        for name in dir(m):
+            c = m.__getattribute__(name)
+            if inspect.isclass(c) and issubclass(c, Scheduler):
+                yield modname
+                break

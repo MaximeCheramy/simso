@@ -92,9 +92,6 @@ class Configuration(object):
             old_dir = self._cur_dir
             self._cur_dir = os.path.split(simulation_file)[0] or '.'
 
-            # Update relative paths.
-            self._scheduler_info.set_name(
-                old_dir + '/' + self._scheduler_info.name, self._cur_dir)
             for task in self._task_info_list:
                 if task.stack_file:
                     task.set_stack_file(

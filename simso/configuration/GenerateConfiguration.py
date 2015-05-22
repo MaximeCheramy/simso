@@ -4,6 +4,7 @@
 from xml.etree.ElementTree import Element, SubElement
 from xml.etree import ElementTree
 from xml.dom import minidom
+import os
 
 
 def prettify(elem):
@@ -23,7 +24,7 @@ def generate(configuration):
              'etm': str(configuration.etm)}
     top = Element('simulation', attrs)
 
-    generate_sched(top, configuration.scheduler_info)
+    generate_sched(configuration, top, configuration.scheduler_info)
     generate_cache(
         top, configuration.caches_list, configuration.memory_access_time)
     generate_processors(
@@ -34,13 +35,19 @@ def generate(configuration):
     return prettify(top)
 
 
-def generate_sched(top, sched_info):
-    sched = SubElement(top, 'sched', {
-        'className': sched_info.name,
+def generate_sched(configuration, top, sched_info):
+    attrs = {
         'overhead': str(sched_info.overhead),
         'overhead_activate': str(sched_info.overhead_activate),
         'overhead_terminate': str(sched_info.overhead_terminate)
-    })
+    }
+
+    if sched_info.filename:
+        attrs['className'] = os.path.relpath(sched_info.filename,
+                                             configuration.cur_dir)
+    if sched_info.clas:
+        attrs['class'] = sched_info.clas
+    sched = SubElement(top, 'sched', attrs)
     for field_name in sched_info.data.keys():
         SubElement(sched, 'field', {'name': field_name,
                                     'value': str(sched_info.data[field_name]),

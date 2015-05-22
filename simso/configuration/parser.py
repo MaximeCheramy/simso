@@ -84,7 +84,8 @@ class Parser(object):
                 task_type = 'APeriodic'
 
             list_activation_dates = []
-            if 'list_activation_dates' in attr and attr['list_activation_dates'].value != '':
+            if ('list_activation_dates' in attr and
+                    attr['list_activation_dates'].value != ''):
                 list_activation_dates = sorted(
                     map(float, attr['list_activation_dates'].value.split(',')))
 
@@ -214,7 +215,16 @@ class Parser(object):
         overhead_terminate = 0
         sched = self._dom.getElementsByTagName('sched')[0]
         attr = sched.attributes
-        filename = attr['className'].value
+        if 'class' in attr:
+            clas = attr['class'].value
+        else:
+            clas = ''
+
+        if 'className' in attr:
+            filename = attr['className'].value
+        else:
+            filename = ''
+
         if 'overhead' in attr:
             overhead = int(float(attr['overhead'].value))
         if 'overhead_activate' in attr:
@@ -231,8 +241,8 @@ class Parser(object):
             data[name] = (convert_function[type_](value), type_)
 
         self.scheduler_info = SchedulerInfo(
-            overhead=overhead, overhead_activate=overhead_activate,
+            clas=clas, overhead=overhead, overhead_activate=overhead_activate,
             overhead_terminate=overhead_terminate, fields=data)
-        if filename[0] != '/':
+        if filename and filename[0] != '/':
                 filename = self.cur_dir + '/' + filename
-        self.scheduler_info.set_name(filename, self.cur_dir)
+        self.scheduler_info.filename = filename
