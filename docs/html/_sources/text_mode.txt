@@ -11,7 +11,7 @@ Loading a configuration using a simulation file
 
 A :class:`Configuration <simso.configuration.Configuration>` can be initialized with a file passed to its constructor::
 
-        configuration = Configuration(argv[0])
+        configuration = Configuration(argv[1])
 
 The configuration could also be partial and completed by the script. Finally, the configuration can be checked for correctness using the :meth:`check_all <simso.configuration.Configuration.check_all>` method::
 
@@ -37,10 +37,14 @@ And of course processors::
 
             configuration.add_processor(name="CPU 1", identifier=1)
 
-Finally, a scheduler is also required::
+Finally, a scheduler is also required. For that, it's possible to use a custom scheduler::
 
-            configuration.scheduler_info.set_name("examples/RM.py",
-                    configuration.cur_dir)
+            configuration.scheduler_info.filename = "examples/RM.py"
+
+Or one of the schedulers embedded with SimSo::
+
+            configuration.scheduler_info.clas = "simso.schedulers.RM"
+
 
 Creating the Model
 ------------------
@@ -67,10 +71,11 @@ The following script simulate a system loading from a simulation file or configu
         from simso.core import Model
         from simso.configuration import Configuration
 
+
         def main(argv):
-            if len(argv) == 1:
+            if len(argv) == 2:
                 # Configuration load from a file.
-                configuration = Configuration(argv[0])
+                configuration = Configuration(argv[1])
             else:
                 # Manual configuration:
                 configuration = Configuration()
@@ -89,8 +94,8 @@ The following script simulate a system loading from a simulation file or configu
                 configuration.add_processor(name="CPU 1", identifier=1)
 
                 # Add a scheduler:
-                configuration.scheduler_info.set_name("examples/RM.py",
-                        configuration.cur_dir)
+                #configuration.scheduler_info.filename = "examples/RM.py"
+                configuration.scheduler_info.clas = "simso.schedulers.RM"
 
             # Check the config before trying to run it.
             configuration.check_all()
@@ -104,6 +109,8 @@ The following script simulate a system loading from a simulation file or configu
             # Print logs.
             for log in model.logs:
                 print(log)
+
+        main(sys.argv)
 
 
 More details

@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -70,7 +70,7 @@
 <div class="section" id="loading-a-configuration-using-a-simulation-file">
 <h2><a class="toc-backref" href="#id2">Loading a configuration using a simulation file</a><a class="headerlink" href="#loading-a-configuration-using-a-simulation-file" title="Permalink to this headline">¶</a></h2>
 <p>A <a class="reference internal" href="modules.html#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><tt class="xref py py-class docutils literal"><span class="pre">Configuration</span></tt></a> can be initialized with a file passed to its constructor:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>The configuration could also be partial and completed by the script. Finally, the configuration can be checked for correctness using the <tt class="xref py py-meth docutils literal"><span class="pre">check_all</span></tt> method:</p>
@@ -96,9 +96,12 @@
 <div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">add_processor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;CPU 1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Finally, a scheduler is also required:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;examples/RM.py&quot;</span><span class="p">,</span>
-        <span class="n">configuration</span><span class="o">.</span><span class="n">cur_dir</span><span class="p">)</span>
+<p>Finally, a scheduler is also required. For that, it&#8217;s possible to use a custom scheduler:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;examples/RM.py&quot;</span>
+</pre></div>
+</div>
+<p>Or one of the schedulers embedded with SimSo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">clas</span> <span class="o">=</span> <span class="s">&quot;simso.schedulers.RM&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -125,10 +128,11 @@
 <span class="kn">from</span> <span class="nn">simso.core</span> <span class="kn">import</span> <span class="n">Model</span>
 <span class="kn">from</span> <span class="nn">simso.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
 
+
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="c"># Configuration load from a file.</span>
-        <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c"># Manual configuration:</span>
         <span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
@@ -147,8 +151,8 @@
         <span class="n">configuration</span><span class="o">.</span><span class="n">add_processor</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;CPU 1&quot;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="c"># Add a scheduler:</span>
-        <span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="s">&quot;examples/RM.py&quot;</span><span class="p">,</span>
-                <span class="n">configuration</span><span class="o">.</span><span class="n">cur_dir</span><span class="p">)</span>
+        <span class="c">#configuration.scheduler_info.filename = &quot;examples/RM.py&quot;</span>
+        <span class="n">configuration</span><span class="o">.</span><span class="n">scheduler_info</span><span class="o">.</span><span class="n">clas</span> <span class="o">=</span> <span class="s">&quot;simso.schedulers.RM&quot;</span>
 
     <span class="c"># Check the config before trying to run it.</span>
     <span class="n">configuration</span><span class="o">.</span><span class="n">check_all</span><span class="p">()</span>
@@ -162,6 +166,8 @@
     <span class="c"># Print logs.</span>
     <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">logs</span><span class="p">:</span>
         <span class="k">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

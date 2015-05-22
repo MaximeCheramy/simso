@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.1',
+        VERSION:     '0.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -212,7 +212,7 @@ It takes as argument the cpu on which the scheduler runs.</p>
 
 <dl class="class">
 <dt id="simso.core.Scheduler.SchedulerInfo">
-<em class="property">class </em><tt class="descname">SchedulerInfo</tt><big>(</big><em>name=''</em>, <em>cls=None</em>, <em>overhead=0</em>, <em>overhead_activate=0</em>, <em>overhead_terminate=0</em>, <em>fields=None</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descname">SchedulerInfo</tt><big>(</big><em>clas=''</em>, <em>overhead=0</em>, <em>overhead_activate=0</em>, <em>overhead_terminate=0</em>, <em>fields=None</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo" title="Permalink to this definition">¶</a></dt>
 <dd><p>SchedulerInfo groups the data that characterize a Scheduler (such as the
 scheduling overhead) and do the dynamic loading of the scheduler.</p>
 <dl class="docutils">
@@ -225,13 +225,6 @@ scheduling overhead) and do the dynamic loading of the scheduler.</p>
 </dd>
 </dl>
 <p>Methods:</p>
-<dl class="attribute">
-<dt id="simso.core.Scheduler.SchedulerInfo.filename">
-<tt class="descname">filename</tt><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.filename" title="Permalink to this definition">¶</a></dt>
-<dd><p>Path of the scheduler (absolute or relative to simso&#8217;s working
-directory).</p>
-</dd></dl>
-
 <dl class="method">
 <dt id="simso.core.Scheduler.SchedulerInfo.get_cls">
 <tt class="descname">get_cls</tt><big>(</big><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.get_cls" title="Permalink to this definition">¶</a></dt>
@@ -246,26 +239,6 @@ directory).</p>
 <dt>Args:</dt>
 <dd><ul class="first last simple">
 <li><cite>model</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><tt class="xref py py-class docutils literal"><span class="pre">Model</span></tt></a> object             that is passed to the constructor.</li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="simso.core.Scheduler.SchedulerInfo.name">
-<tt class="descname">name</tt><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.name" title="Permalink to this definition">¶</a></dt>
-<dd><p>The name of the Scheduler (its relative path to the XML).</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="simso.core.Scheduler.SchedulerInfo.set_name">
-<tt class="descname">set_name</tt><big>(</big><em>filename</em>, <em>cur_dir=None</em><big>)</big><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.set_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the scheduler from a file.</p>
-<dl class="docutils">
-<dt>Args:</dt>
-<dd><ul class="first last simple">
-<li><cite>filename</cite>: relative path to the Python source containing the             Scheduler.</li>
-<li><cite>cur_dir</cite>: current directory. Used to set the name relatively             to the simulation file.</li>
 </ul>
 </dd>
 </dl>
