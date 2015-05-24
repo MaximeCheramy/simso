@@ -241,14 +241,37 @@ class Scheduler(object):
 
 
 def get_schedulers():
-    package = importlib.import_module('simso.schedulers')
-    for importer, modname, ispkg in pkgutil.walk_packages(
-            path=package.__path__,
-            prefix=package.__name__ + '.',
-            onerror=lambda x: None):
-        m = importlib.import_module(modname)
-        for name in dir(m):
-            c = m.__getattribute__(name)
-            if inspect.isclass(c) and issubclass(c, Scheduler):
-                yield modname
+    modules = []
+
+    # Special case when using PyInstaller:
+    if getattr(sys, 'frozen', False):
+        import pyi_importers
+        importer = None
+        for obj in sys.meta_path:
+            if isinstance(obj, pyi_importers.FrozenImporter):
+                importer = obj
                 break
+
+        for name in importer.toc:
+            if name.startswith('simso.schedulers.'):
+                modules.append(name)
+
+    # Normal case:
+    else:
+        package = importlib.import_module('simso.schedulers')
+        for importer, modname, ispkg in pkgutil.walk_packages(
+                path=package.__path__,
+                prefix=package.__name__ + '.',
+                onerror=lambda x: None):
+            modules.append(modname)
+
+    for modname in sorted(modules):
+        try:
+            m = importlib.import_module(modname)
+            for name in dir(m):
+                c = m.__getattribute__(name)
+                if inspect.isclass(c) and issubclass(c, Scheduler):
+                    yield modname
+                    break
+        except (ImportError, SyntaxError):
+            print("Import error: ", modname)
