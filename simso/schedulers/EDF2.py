@@ -1,6 +1,6 @@
 """
 Implementation of the Global-EDF (Earliest Deadline First) for multiprocessor
-architectures.
+architectures (alternative implementation as the one provided by EDF.py).
 """
 from simso.core import Scheduler
 
