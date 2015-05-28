@@ -10,9 +10,8 @@ RESCHED = 1
 ACTIVATE = 2
 TERMINATE = 3
 TIMER = 4
-MIGRATE = 5
-PREEMPT = 6
-SPEED = 7
+PREEMPT = 5
+SPEED = 6
 
 
 class ProcInfo(object):
@@ -80,10 +79,6 @@ class Processor(Process):
         """
         self._evts.append((RESCHED,))
 
-    def migrate(self, job):
-        self._evts.append((MIGRATE, job))
-        self._running = job
-
     def activate(self, job):
         self._evts.append((ACTIVATE, job))
 
@@ -91,9 +86,10 @@ class Processor(Process):
         self._evts.append((TERMINATE, job))
         self._running = None
 
-    def preempt(self):
+    def preempt(self, job=None):
+        self._evts = deque([e for e in self._evts if e[0] != PREEMPT])
         self._evts.append((PREEMPT,))
-        self._running = None
+        self._running = job
 
     def timer(self, timer):
         self._evts.append((TIMER, timer))
@@ -196,8 +192,6 @@ class Processor(Process):
                     print(self.sim.now(), "hold", evt[1].overhead)
                     yield hold, self, evt[1].overhead
                 evt[1].call_handler()
-            elif evt[0] == MIGRATE:
-                self.monitor.observe(ProcOverheadEvent("Migration"))
             elif evt[0] == SPEED:
                 self._speed = evt[1]
             elif evt[0] == RESCHED:
@@ -208,16 +202,14 @@ class Processor(Process):
                 yield hold, self, self.sched.overhead  # overhead scheduling
                 if type(decisions) is not list:
                     decisions = [decisions]
+                decisions = [d for d in decisions if d is not None]
 
-                for decision in decisions:
-                    if decision is None:
-                        continue
-                    else:
-                        job, cpu = decision
-
+                for job, cpu in decisions:
+                    # If there is nothing to change, simply ignore:
                     if cpu.running == job:
                         continue
 
+                    # If trying to execute a terminated job, warn and ignore:
                     if job is not None and not job.is_active():
                         print("Can't schedule a terminated job! ({})"
                               .format(job.name))
@@ -225,23 +217,18 @@ class Processor(Process):
 
                     # if the job was running somewhere else, stop it.
                     if job and job.cpu.running == job:
-                        job.cpu.evts = [e for e in self._evts if e[0] != MIGRATE]
                         job.cpu.preempt()
 
                     # Send that job to processor cpu.
-                    if job is None:
-                        cpu.preempt()
-                    else:
-                        cpu.migrate(job)
+                    cpu.preempt(job)
 
                     if job:
                         job.task.cpu = cpu
 
+                # Forbid to run a job simultaneously on 2 or more processors.
                 running_tasks = [
                     cpu.running.name
                     for cpu in self._model.processors if cpu.running]
-                #if len(set(running_tasks)) != len(running_tasks):
-                #    print(running_tasks)
                 assert len(set(running_tasks)) == len(running_tasks), \
                     "Try to run a job on 2 processors simultaneously!"
 
