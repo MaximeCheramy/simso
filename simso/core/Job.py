@@ -169,16 +169,30 @@ class Job(Process):
     @property
     def ret(self):
         """
-        Remaining execution time.
+        Remaining execution time in ms.
         """
         return self.wcet - self.actual_computation_time
 
     @property
+    def laxity(self):
+        """
+        Dynamic laxity of the job in ms.
+        """
+        return (self.absolute_deadline - self.ret
+                ) * self.sim.cycles_per_ms - self.sim.now()
+
+    @property
     def computation_time(self):
+        """
+        Time spent executing the job in ms.
+        """
         return float(self.computation_time_cycles) / self._sim.cycles_per_ms
 
     @property
     def computation_time_cycles(self):
+        """
+        Time spent executing the job.
+        """
         if self._last_exec is None:
             return int(self._computation_time)
         else:
@@ -187,6 +201,10 @@ class Job(Process):
 
     @property
     def actual_computation_time(self):
+        """
+        Computation time in ms as if the processor speed was 1.0 during the
+        whole execution.
+        """
         return float(
             self.actual_computation_time_cycles) / self._sim.cycles_per_ms
 

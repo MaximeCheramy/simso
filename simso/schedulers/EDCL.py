@@ -21,14 +21,12 @@ class EDCL(Scheduler):
         job.cpu.resched()
 
     def update_laxity(self):
-        for t in self.task_list:
-            if t.is_active():
-                job = t.job
-                laxity = (job.absolute_deadline - job.ret
-                          ) * self.sim.cycles_per_ms - self.sim.now()
+        for task in self.task_list:
+            if task.is_active():
+                job = task.job
                 # if laxity is less than 0, the job will never respect its deadline,
                 # so we do not consider this job as critical
-                if laxity == 0:
+                if job.laxity == 0:
                     job.data['priority'] = 0
                 else:
                     job.data['priority'] = job.absolute_deadline

@@ -58,8 +58,7 @@ class EDZL(Scheduler):
             # Recherche du prochain event ZeroLaxity pour configurer le timer.
             minimum = None
             for job in self.ready_list:
-                zl_date = int((job.absolute_deadline - job.ret
-                               ) * self.sim.cycles_per_ms - self.sim.now())
+                zl_date = job.laxity
                 if (minimum is None or minimum[0] > zl_date) and zl_date > 0:
                     minimum = (zl_date, job)
 
