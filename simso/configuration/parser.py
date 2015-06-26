@@ -93,8 +93,8 @@ class Parser(object):
                 attr['name'].value,
                 int(attr['id'].value),
                 task_type,
-                'abort_on_miss' in attr
-                and attr['abort_on_miss'].value == 'yes',
+                'abort_on_miss' not in attr
+                or attr['abort_on_miss'].value == 'yes',
                 float(attr['period'].value),
                 float(attr['activationDate'].value)
                 if 'activationDate' in attr else 0,
