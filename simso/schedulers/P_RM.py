@@ -2,14 +2,13 @@
 Partitionned EDF using PartitionedScheduler.
 """
 from simso.core.Scheduler import SchedulerInfo
-from simso.schedulers.RM_mono import RM_mono
 from simso.utils import PartitionedScheduler
 
 
 class P_RM(PartitionedScheduler):
     def init(self):
         PartitionedScheduler.init(
-            self, SchedulerInfo("RM_mono", RM_mono))
+            self, SchedulerInfo("simso.schedulers.RM_mono"))
 
     def packer(self):
         # First Fit

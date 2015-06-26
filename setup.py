@@ -7,7 +7,8 @@ setup(
     description='Simulation of Multiprocessor Real-Time Scheduling with Overheads',
     author='Maxime Cheramy',
     author_email='maxime.cheramy@laas.fr',
-    url='http://homepages.laas.fr/mcheramy/simso/',
+    url='http://projects.laas.fr/simso/',
+    download_url='https://github.com/MaximeCheramy/simso',
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',

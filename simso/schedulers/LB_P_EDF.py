@@ -9,7 +9,7 @@ from simso.utils import PartitionedScheduler
 
 class LB_P_EDF(PartitionedScheduler):
     def init(self):
-        PartitionedScheduler.init(self, SchedulerInfo("EDF_mono", EDF_mono))
+        PartitionedScheduler.init(self, SchedulerInfo("simso.schedulers.EDF_mono"))
 
     def packer(self):
         # First Fit

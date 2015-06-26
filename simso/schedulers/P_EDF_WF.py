@@ -10,4 +10,4 @@ from simso.utils.PartitionedScheduler import decreasing_worst_fit
 class P_EDF_WF(PartitionedScheduler):
     def init(self):
         PartitionedScheduler.init(
-            self, SchedulerInfo("EDF_mono", EDF_mono), decreasing_worst_fit)
+            self, SchedulerInfo("simso.schedulers.EDF_mono"), decreasing_worst_fit)

@@ -80,8 +80,7 @@ class EDHS(Scheduler):
             cpus.append([cpu, Fraction(0)])
 
             # Instantiate a scheduler.
-            sched = EDF_modified(self.sim, SchedulerInfo("EDF_modified",
-                                 EDF_modified))
+            sched = EDF_modified(self.sim, SchedulerInfo())
             sched.add_processor(cpu)
             sched.init()
 

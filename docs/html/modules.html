@@ -485,10 +485,29 @@ date + the relative deadline.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="simso.core.Job.Job.actual_computation_time">
+<tt class="descname">actual_computation_time</tt><a class="headerlink" href="#simso.core.Job.Job.actual_computation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computation time in ms as if the processor speed was 1.0 during the
+whole execution.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="simso.core.Job.Job.actual_computation_time_cycles">
 <tt class="descname">actual_computation_time_cycles</tt><a class="headerlink" href="#simso.core.Job.Job.actual_computation_time_cycles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Computation time as if the processor speed was 1.0 during the whole
 execution.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.computation_time">
+<tt class="descname">computation_time</tt><a class="headerlink" href="#simso.core.Job.Job.computation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time spent executing the job in ms.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="simso.core.Job.Job.computation_time_cycles">
+<tt class="descname">computation_time_cycles</tt><a class="headerlink" href="#simso.core.Job.Job.computation_time_cycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time spent executing the job.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -547,6 +566,12 @@ Equivalent to <tt class="docutils literal"><span class="pre">self.cpu.running</s
 </dd></dl>
 
 <dl class="attribute">
+<dt id="simso.core.Job.Job.laxity">
+<tt class="descname">laxity</tt><a class="headerlink" href="#simso.core.Job.Job.laxity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic laxity of the job in ms.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="simso.core.Job.Job.period">
 <tt class="descname">period</tt><a class="headerlink" href="#simso.core.Job.Job.period" title="Permalink to this definition">¶</a></dt>
 <dd><p>Period in milliseconds. Equivalent to <tt class="docutils literal"><span class="pre">self.task.period</span></tt>.</p>
@@ -555,7 +580,7 @@ Equivalent to <tt class="docutils literal"><span class="pre">self.cpu.running</s
 <dl class="attribute">
 <dt id="simso.core.Job.Job.ret">
 <tt class="descname">ret</tt><a class="headerlink" href="#simso.core.Job.Job.ret" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remaining execution time.</p>
+<dd><p>Remaining execution time in ms.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -859,7 +884,7 @@ processors.</p>
 
 <dl class="method">
 <dt id="simso.configuration.Configuration.Configuration.add_task">
-<tt class="descname">add_task</tt><big>(</big><em>name</em>, <em>identifier</em>, <em>task_type='Periodic'</em>, <em>abort_on_miss=False</em>, <em>period=10</em>, <em>activation_date=0</em>, <em>n_instr=0</em>, <em>mix=0.5</em>, <em>stack_file=''</em>, <em>wcet=0</em>, <em>acet=0</em>, <em>et_stddev=0</em>, <em>deadline=10</em>, <em>base_cpi=1.0</em>, <em>followed_by=None</em>, <em>list_activation_dates=[]</em>, <em>preemption_cost=0</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_task" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_task</tt><big>(</big><em>name</em>, <em>identifier</em>, <em>task_type='Periodic'</em>, <em>abort_on_miss=True</em>, <em>period=10</em>, <em>activation_date=0</em>, <em>n_instr=0</em>, <em>mix=0.5</em>, <em>stack_file=''</em>, <em>wcet=0</em>, <em>acet=0</em>, <em>et_stddev=0</em>, <em>deadline=10</em>, <em>base_cpi=1.0</em>, <em>followed_by=None</em>, <em>list_activation_dates=[]</em>, <em>preemption_cost=0</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_task" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method to create a TaskInfo and add it to the list of tasks.</p>
 </dd></dl>
 

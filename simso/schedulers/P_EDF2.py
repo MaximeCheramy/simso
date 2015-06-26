@@ -21,7 +21,7 @@ class P_EDF2(Scheduler):
             cpus.append([cpu, 0])
 
             # Instantiate a scheduler.
-            sched = EDF_mono(self.sim, SchedulerInfo("EDF_mono", EDF_mono))
+            sched = EDF_mono(self.sim, SchedulerInfo("simso.schedulers.EDF_mono"))
             sched.add_processor(cpu)
             sched.init()
 

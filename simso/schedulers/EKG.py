@@ -108,8 +108,7 @@ class EKG(Scheduler):
         cpus = []
         for i, cpu in enumerate(self.processors):
             # Instantiate a scheduler.
-            sched = Modified_EDF(self.sim, SchedulerInfo("Modified_EDF",
-                                                         Modified_EDF))
+            sched = Modified_EDF(self.sim, SchedulerInfo())
             sched.add_processor(cpu)
             sched.init()
 
