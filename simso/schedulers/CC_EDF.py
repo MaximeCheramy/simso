@@ -4,11 +4,7 @@ Cycle-Conserving EDF. A DVFS variant of EDF (uniprocessor).
 from simso.core import Scheduler
 from simso.schedulers import scheduler
 
-@scheduler("simso.schedulers.CC_EDF", 
-    required_proc_fields = [
-        { 'name': 'priority', 'type': 'float', 'default': '1.0' }
-    ]
-)
+@scheduler("simso.schedulers.CC_EDF")
 class CC_EDF(Scheduler):
     def init(self):
         self.ready_list = []
