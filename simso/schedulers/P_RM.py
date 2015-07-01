@@ -3,8 +3,9 @@ Partitionned EDF using PartitionedScheduler.
 """
 from simso.core.Scheduler import SchedulerInfo
 from simso.utils import PartitionedScheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.P_RM")
 class P_RM(PartitionedScheduler):
     def init(self):
         PartitionedScheduler.init(

@@ -1,6 +1,7 @@
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.RM")
 class RM(Scheduler):
     """ Rate monotonic """
     def init(self):

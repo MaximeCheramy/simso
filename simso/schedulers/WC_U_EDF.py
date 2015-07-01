@@ -3,8 +3,9 @@ Work-Conserving version of U-EDF.
 """
 
 from simso.schedulers.U_EDF import U_EDF
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.WC_U_EDF")
 class WC_U_EDF(U_EDF):
 #    def on_terminated(self, job):
 #        self.reschedule()

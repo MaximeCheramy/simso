@@ -2,8 +2,9 @@
 
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EPDF")
 class EPDF(Scheduler):
     """Earliest Pseudo-Deadline First"""
 

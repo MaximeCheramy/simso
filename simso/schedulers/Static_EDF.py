@@ -2,8 +2,13 @@
 Static EDF. A DVFS variant of EDF (uniprocessor).
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.Static_EDF", 
+           required_proc_fields = [
+               { 'name': 'priority', 'type': 'float', 'default': '1.0' }
+           ]
+)
 class Static_EDF(Scheduler):
     def init(self):
         self.ready_list = []

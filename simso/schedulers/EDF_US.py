@@ -2,8 +2,9 @@
 Implementation of EDF-US[1/2].
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EDF_US")
 class EDF_US(Scheduler):
     def init(self):
         self.ready_list = []

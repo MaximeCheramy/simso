@@ -2,8 +2,13 @@
 # coding=utf-8
 
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.FP", 
+    required_task_fields = [
+        {'name': 'priority', 'type' : 'int', 'default' : '0' }   
+    ]
+)
 class FP(Scheduler):
     """ Fixed Priority (use 'priority' field) """
     def init(self):

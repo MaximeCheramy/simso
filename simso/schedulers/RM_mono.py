@@ -2,8 +2,9 @@
 Rate Monotic algorithm for uniprocessor architectures.
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.RM_mono")
 class RM_mono(Scheduler):
     def init(self):
         self.ready_list = []

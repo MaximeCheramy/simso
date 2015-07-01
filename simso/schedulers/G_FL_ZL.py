@@ -1,6 +1,7 @@
 from simso.core import Scheduler, Timer
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.G_FL_ZL")
 class G_FL_ZL(Scheduler):
     """
     G_FL with Zero Laxity Scheduler.

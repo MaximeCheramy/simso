@@ -7,8 +7,9 @@ tasks"
 
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.U_EDF")
 class U_EDF(Scheduler):
     def init(self):
         self.al = {}

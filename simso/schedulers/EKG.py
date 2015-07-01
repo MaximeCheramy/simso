@@ -2,6 +2,7 @@ from simso.core import Scheduler, Timer
 from simso.core.Scheduler import SchedulerInfo
 from fractions import Fraction
 from math import ceil
+from simso.schedulers import scheduler
 
 
 class Modified_EDF(Scheduler):
@@ -85,7 +86,11 @@ class Group(object):
                     for task in self.tasks if task.jobs]) \
             * self.sim.cycles_per_ms
 
-
+@scheduler("simso.schedulers.EKG", 
+    required_fields = [
+        {'name' : 'K', 'type' : 'int', 'default' : '0'}
+    ]
+)
 class EKG(Scheduler):
     def init(self):
         self.groups = []

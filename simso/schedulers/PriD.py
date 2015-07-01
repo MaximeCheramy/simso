@@ -4,8 +4,9 @@ Priority-Driven Scheduling of Periodic Task Systems on Multiprocessors.
 """
 from simso.core import Scheduler
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.PriD")
 class PriD(Scheduler):
     """EDF(k) scheduler"""
     def init(self):

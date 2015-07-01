@@ -3,8 +3,9 @@ Implementation of the Global-EDF (Earliest Deadline First) for multiprocessor
 architectures.
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EDF")
 class EDF(Scheduler):
     """Earliest Deadline First"""
     def on_activate(self, job):

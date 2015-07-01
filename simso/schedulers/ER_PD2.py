@@ -2,6 +2,7 @@
 
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
 
 def rounded_wcet(job, q=None):
@@ -88,7 +89,7 @@ class PseudoJob(object):
         return int(ceil(seq * job.deadline / rounded_wcet(job))) \
             - int((seq - 1) * job.deadline / rounded_wcet(job))
 
-
+@scheduler("simso.schedulers.ER_PD2")
 class ER_PD2(Scheduler):
     def init(self):
         self.ready_list = []

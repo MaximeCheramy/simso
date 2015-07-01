@@ -4,8 +4,9 @@ Anderson in Fair lateness scheduling: Reducing maximum lateness in G-EDF-like
 scheduling.
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.G_FL")
 class G_FL(Scheduler):
     """Earliest Deadline First"""
     def init(self):

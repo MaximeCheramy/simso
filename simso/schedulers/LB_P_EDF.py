@@ -5,8 +5,9 @@ Try to load balance the tasks among the processors.
 from simso.core.Scheduler import SchedulerInfo
 from simso.schedulers.EDF_mono import EDF_mono
 from simso.utils import PartitionedScheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.LB_P_EDF")
 class LB_P_EDF(PartitionedScheduler):
     def init(self):
         PartitionedScheduler.init(self, SchedulerInfo("simso.schedulers.EDF_mono"))
