@@ -14,8 +14,8 @@ class Cache(object):
 
 
 class Cache_LRU(Cache):
-    def __init__(self, name, identifier, size, associativity, penalty):
-        Cache.__init__(self, name, identifier, size, associativity, penalty)
+    def __init__(self, name, identifier, size, associativity, access_time):
+        Cache.__init__(self, name, identifier, size, associativity, access_time)
         self._groups = None
 
     def init(self):
