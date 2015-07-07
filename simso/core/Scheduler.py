@@ -53,9 +53,12 @@ class SchedulerInfo(object):
         try:
             clas = None
             if self.clas:
-                name = self.clas.rsplit('.', 1)[1]
-                importlib.import_module(self.clas)
-                clas = getattr(importlib.import_module(self.clas), name)
+                if type(self.clas) is type:
+                    clas = self.clas
+                else:
+                    name = self.clas.rsplit('.', 1)[1]
+                    importlib.import_module(self.clas)
+                    clas = getattr(importlib.import_module(self.clas), name)
             elif self.filename:
                 path, name = os.path.split(self.filename)
                 name = os.path.splitext(name)[0]
