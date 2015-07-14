@@ -10,8 +10,9 @@ tasks with implicit deadlines.
 from simso.core import Scheduler, Timer
 from simso.schedulers.RUNServer import EDFServer, TaskServer, DualServer, \
     select_jobs, add_job, get_child_tasks
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.RUN")
 class RUN(Scheduler):
     """
     RUN scheduler. The offline part is done here but the online part is mainly

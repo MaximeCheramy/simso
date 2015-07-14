@@ -4,8 +4,9 @@ Implementation of the DP-WRAP algorithm as presented by Levin et al. in
 """
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.DP_WRAP")
 class DP_WRAP(Scheduler):
     def init(self):
         self.t_f = 0

@@ -3,8 +3,9 @@ Work-Conserving version of U-EDF.
 """
 
 from simso.schedulers.RUN import RUN
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.WC_RUN")
 class WC_RUN(RUN):
     def init(self):
         RUN.init(self)

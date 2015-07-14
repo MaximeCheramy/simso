@@ -6,8 +6,9 @@ Optimal Multiprocessor Scheduling Algorithm for Sporadic Task Sets".
 from simso.core import Scheduler, Timer
 from heapq import heappush, heapreplace, heappop, heapify
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.LRE_TL")
 class LRE_TL(Scheduler):
     def init(self):
         """

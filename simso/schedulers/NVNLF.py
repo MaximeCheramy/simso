@@ -6,8 +6,9 @@ Multiprocessors."
 
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.NVNLF")
 class NVNLF(Scheduler):
     def init(self):
         self.selected_jobs = []  # Jobs currently running.

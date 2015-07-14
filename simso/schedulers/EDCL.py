@@ -4,8 +4,9 @@ __author__ = 'Pierre-Emmanuel Hladik'
 
 
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EDCL")
 class EDCL(Scheduler):
     """
     EDCL Scheduler.

@@ -8,12 +8,12 @@ from simso.core import Scheduler, Timer
 from simso.core.Scheduler import SchedulerInfo
 from fractions import Fraction
 from math import ceil
+from simso.schedulers import scheduler
 
 migrating_tasks = {}
 
 # Mapping processor to scheduler.
 map_cpu_sched = {}
-
 
 class EDF_modified(Scheduler):
     """
@@ -69,6 +69,7 @@ class EDF_modified(Scheduler):
         return (job, cpu)
 
 
+@scheduler("simso.schedulers.EDHS")
 class EDHS(Scheduler):
     def init(self):
         # Mapping task to scheduler.

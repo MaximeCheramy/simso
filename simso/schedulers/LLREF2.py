@@ -5,8 +5,9 @@ Implementation of the LLREF scheduler as presented by Cho et al. in
 
 from simso.core import Scheduler, Timer
 from math import ceil
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.LLREF2")
 class LLREF2(Scheduler):
     def init(self):
         self.selected_jobs = []  # Jobs currently running.

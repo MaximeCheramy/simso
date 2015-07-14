@@ -2,8 +2,9 @@
 # coding=utf-8
 
 from simso.core import Scheduler, Timer
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EDZL")
 class EDZL(Scheduler):
     """
     EDZL Scheduler. EDF Scheduler with zero laxity events.

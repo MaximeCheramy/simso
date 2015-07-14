@@ -1,6 +1,7 @@
 from simso.core import Scheduler, Timer
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.LLF")
 class LLF(Scheduler):
     """Least Laxity First"""
     def init(self):

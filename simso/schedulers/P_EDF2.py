@@ -6,8 +6,9 @@ Use EDF_mono.
 from simso.core import Scheduler
 from simso.core.Scheduler import SchedulerInfo
 from simso.schedulers.EDF_mono import EDF_mono
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.P_EDF2")
 class P_EDF2(Scheduler):
     def init(self):
         # Mapping processor to scheduler.

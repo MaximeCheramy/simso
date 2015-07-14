@@ -2,8 +2,9 @@
 Earliest Deadline First algorithm for uniprocessor architectures.
 """
 from simso.core import Scheduler
+from simso.schedulers import scheduler
 
-
+@scheduler("simso.schedulers.EDF_mono")
 class EDF_mono(Scheduler):
     def init(self):
         self.ready_list = []

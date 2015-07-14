@@ -3,10 +3,12 @@ Implementation of the BF algorithm.
 
 Authors: Maxime Cheramy and Stefan Junker
 """
+from simso.schedulers import scheduler
 from simso.core import Scheduler, Timer
 from fractions import Fraction
 
 
+@scheduler("simso.schedulers.BF")
 class BF(Scheduler):
     def init(self):
         self.t_f = 0
