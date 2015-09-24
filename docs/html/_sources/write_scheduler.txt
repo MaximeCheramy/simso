@@ -130,7 +130,7 @@ Then the Scheduler can be initialized like this::
 
         class P_EDF(PartitionedScheduler):
             def init(self):
-                PartitionedScheduler.init(self, SchedulerInfo("simso.schedulers.EDF_mono"))
+                PartitionedScheduler.init(self, SchedulerInfo("EDF_mono", EDF_mono))
 
 
 Defining the packing
@@ -170,7 +170,7 @@ Complete source code::
 
         class P_EDF(PartitionedScheduler):
             def init(self):
-                PartitionedScheduler.init(self, SchedulerInfo("simso.schedulers.EDF_mono"))
+                PartitionedScheduler.init(self, SchedulerInfo("EDF_mono", EDF_mono))
 
             def packer(self):
                 # First Fit

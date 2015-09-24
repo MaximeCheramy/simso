@@ -125,8 +125,8 @@ It is possible to get more information from the tasks using :class:`Results <sim
 
 Or the number of preemptions per task::
 
-            for task in model.results.task_list:
-                print("%s %d" % (task.name, sum([job.preemption_count for job in task.jobs])))
+            for task in model.results.tasks.values():
+                print("%s %s" % (task.name, task.preemption_count))
 
 You can get all the metrics provided in the :class:`TaskR <simso.core.results.TaskR>` and :class:`JobR <simso.core.results.JobR>` objects. Read the documentation of these classes to know exactly what is directly accessible.
 
@@ -137,8 +137,8 @@ It is also possible to get the monitor object from each processors. This is a ve
             prev = None
             for evt in processor.monitor:
                 if evt[1].event == ProcEvent.RUN:
-                    if prev is not None and prev != evt[1].args.identifier:
+                    if prev is not None and prev != evt[1].args.task:
                         cxt += 1
-                    prev = evt[1].args.identifier
+                    prev = evt[1].args.task
 
         print("Number of context switches (without counting the OS): " + str(cxt))
