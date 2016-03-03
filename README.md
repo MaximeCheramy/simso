@@ -2,8 +2,8 @@
 
 SimSo is a scheduling simulator designed for the study of real-time scheduling algorithms.
 
-- Project website: http://www.laas.fr/~mcheramy/simso/
-- Documentation: http://homepages.laas.fr/mcheramy/simso/doc/
+- Project website: http://projects.laas.fr/simso/
+- Documentation: http://projects.laas.fr/simso/doc/
 
 You can find its graphical user interface here: https://github.com/MaximeCheramy/simso-gui
 
