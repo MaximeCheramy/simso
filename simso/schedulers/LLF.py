@@ -6,25 +6,22 @@ class LLF(Scheduler):
     """Least Laxity First"""
     def init(self):
         self.ready_list = []
-        self.timer = Timer(self.sim, LLF.compute_laxity,
+        self.timer = Timer(self.sim, LLF.update,
                            (self, self.processors[0]), 1, one_shot=False,
-                           cpu=self.processors[0], overhead=.01)
+                           cpu=self.processors[0], overhead=.001)
         self.timer.start()
 
-    def compute_laxity(self, cpu):
+    def update(self, cpu):
         if self.ready_list:
-            for job in self.ready_list:
-                job.laxity = job.absolute_deadline - \
-                    (job.ret + self.sim.now_ms())
             cpu.resched()
 
     def on_activate(self, job):
         self.ready_list.append(job)
-        self.compute_laxity(job.cpu)
+        job.cpu.resched()
 
     def on_terminated(self, job):
         self.ready_list.remove(job)
-        self.compute_laxity(job.cpu)
+        self.update(job.cpu)
 
     def schedule(self, cpu):
         decisions = []

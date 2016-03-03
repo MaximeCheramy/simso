@@ -8,20 +8,17 @@ class MLLF(Scheduler):
         self.ready_list = []
         self.timer = None
 
-    def compute_laxity(self, cpu):
+    def update(self, cpu):
         if self.ready_list:
-            for job in self.ready_list:
-                job.laxity = (job.absolute_deadline - job.ret) * \
-                    self.sim.cycles_per_ms - self.sim.now()
             cpu.resched()
 
     def on_activate(self, job):
         self.ready_list.append(job)
-        self.compute_laxity(job.cpu)
+        job.cpu.resched()
 
     def on_terminated(self, job):
         self.ready_list.remove(job)
-        self.compute_laxity(job.cpu)
+        self.update(job.cpu)
 
     def schedule(self, cpu):
         decisions = []
@@ -45,7 +42,7 @@ class MLLF(Scheduler):
                 if self.timer:
                     self.timer.stop()
                 self.timer = Timer(
-                    self.sim, MLLF.compute_laxity,
+                    self.sim, MLLF.update,
                     (self, self.processors[0]), dmin - ta.laxity,
                     one_shot=True,
                     cpu=self.processors[0])
