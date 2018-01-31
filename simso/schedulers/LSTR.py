@@ -10,6 +10,11 @@ class LSTR(Scheduler):
 
     def init(self):
         self.ready_list = []
+        """
+        However, LSTR
+        scheduling algorithm operates on every basic time unit. Here, we consider the basic
+        time unit of 1 (ms).
+        """
         self.timer = Timer(self.sim, LSTR.virtual_event,
                            (self, self.processors[0]), 1, one_shot=False)
         self.timer.start()
