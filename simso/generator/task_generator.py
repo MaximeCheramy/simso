@@ -180,7 +180,7 @@ def gen_randfixedsum(nsets, u, n):
         - `u`: Total utilization of the task set.
         - `nsets`: Number of sets to generate.
     """
-    return StaffordRandFixedSum(u, n, nsets)
+    return StaffordRandFixedSum(n, u, nsets)
 
 
 def gen_kato_utilizations(nsets, umin, umax, target_util):
