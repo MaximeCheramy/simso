@@ -165,7 +165,7 @@ def gen_uunifastdiscard(nsets, u, n):
 
     Returns `nsets` of `n` task utilizations.
     """
-    return UUniFastDiscard(u, n, nsets)
+    return UUniFastDiscard(n, u, nsets)
 
 
 def gen_randfixedsum(nsets, u, n):
