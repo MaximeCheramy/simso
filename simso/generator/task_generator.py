@@ -141,7 +141,7 @@ def gen_ripoll(nsets, compute, deadline, period, target_util):
             d = c + random.randint(0, deadline)
             p = d + random.randint(0, period)
             task_set.append((c, d, p))
-            total_util += c / p
+            total_util += float(c) / p
         sets.append(task_set)
     return sets
 
