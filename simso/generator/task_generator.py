@@ -17,10 +17,10 @@ def UUniFastDiscard(n, u, nsets):
             nextSumU = sumU * random.random() ** (1.0 / (n - i))
             utilizations.append(sumU - nextSumU)
             sumU = nextSumU
-        utilizations.append(nextSumU)
+        utilizations.append(sumU)
 
         # If no task utilization exceeds 1:
-        if not [ut for ut in utilizations if ut > 1]:
+        if all(ut <= 1 for ut in utilizations):
             sets.append(utilizations)
 
     return sets
