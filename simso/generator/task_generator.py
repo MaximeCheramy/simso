@@ -187,6 +187,13 @@ def gen_kato_utilizations(nsets, umin, umax, target_util):
     """
     Kato et al. tasksets generator.
 
+    A task set Γ is generated as follows. A new periodic task is appended
+    to Γ as long as U(Γ) ≤ Utot is satisfied. For each task τi, its
+    utilization Ui is computed based on a uniform distribution within the
+    range of [Umin, Umax]. Only the utilization of the task generated at the
+    very end is adjusted so that U(Γ) becomes equal to Utot (thus the Umin
+    constraint might not be satisfied for this task).
+
     Args:
         - `nsets`: Number of tasksets to generate.
         - `umin`: Minimum task utilization.
