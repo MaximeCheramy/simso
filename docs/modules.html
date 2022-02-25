@@ -1,0 +1,1253 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Main modules &#8212; SimSo documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Licenses" href="licenses.html" />
+    <link rel="prev" title="Using SimSo in script mode" href="text_mode.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="licenses.html" title="Licenses"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SimSo documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Main modules</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <section id="main-modules">
+<h1><a class="toc-backref" href="#id3">Main modules</a><a class="headerlink" href="#main-modules" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="table-of-contents">
+<p class="topic-title">Table of Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#main-modules" id="id3">Main modules</a></p>
+<ul>
+<li><p><a class="reference internal" href="#module-simso.core" id="id4">simso.core module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#module-simso.core.Scheduler" id="id5">Scheduler</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Task" id="id6">Task</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Job" id="id7">Job</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Model" id="id8">Model</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Processor" id="id9">Processor</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Timer" id="id10">Timer</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.Logger" id="id11">Logger</a></p></li>
+<li><p><a class="reference internal" href="#module-simso.core.results" id="id12">results</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#module-simso.configuration" id="id13">simso.configuration module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#module-simso.configuration.Configuration" id="id14">Configuration</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#module-simso.generator.task_generator" id="id15">simso.generator module</a></p></li>
+<li><p><a class="reference internal" href="#simso-utils-module" id="id16">simso.utils module</a></p>
+<ul>
+<li><p><a class="reference internal" href="#module-simso.utils.PartitionedScheduler" id="id17">PartitionedScheduler</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="module-simso.core">
+<span id="simso-core-module"></span><h2><a class="toc-backref" href="#id4">simso.core module</a><a class="headerlink" href="#module-simso.core" title="Permalink to this headline">¶</a></h2>
+<p>The core module include all the classes needed for the simulation.</p>
+<section id="module-simso.core.Scheduler">
+<span id="scheduler"></span><h3><a class="toc-backref" href="#id5">Scheduler</a><a class="headerlink" href="#module-simso.core.Scheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Scheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler_info</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The implementation of a scheduler is done by subclassing this abstract
+class.</p>
+<p>The scheduling events are modeled by method calls which take as arguments
+the <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">jobs</span></code></a> and the <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processors</span></code></a>.</p>
+<p>The following methods should be redefined in order to interact with the
+simulation:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#simso.core.Scheduler.Scheduler.init" title="simso.core.Scheduler.Scheduler.init"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init()</span></code></a> Called when the simulation is ready. The scheduler         logic should be initialized here.</p></li>
+<li><p><a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_activate" title="simso.core.Scheduler.Scheduler.on_activate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_activate()</span></code></a> Called upon a job activation.</p></li>
+<li><p><a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_terminated" title="simso.core.Scheduler.Scheduler.on_terminated"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_terminated()</span></code></a> Called when a job is terminated.</p></li>
+<li><p><a class="reference internal" href="#simso.core.Scheduler.Scheduler.schedule" title="simso.core.Scheduler.Scheduler.schedule"><code class="xref py py-meth docutils literal notranslate"><span class="pre">schedule()</span></code></a> Take the scheduling decision. This method should         not be called directly. A call to the <a class="reference internal" href="#simso.core.Processor.Processor.resched" title="simso.core.Processor.Processor.resched"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resched</span></code></a> method is required.</p></li>
+</ul>
+</div></blockquote>
+<p>By default, the scheduler can only run on a single processor at the same
+simulation time. It is also possible to override this behavior by
+overriding the <a class="reference internal" href="#simso.core.Scheduler.Scheduler.get_lock" title="simso.core.Scheduler.Scheduler.get_lock"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lock()</span></code></a> and <a class="reference internal" href="#simso.core.Scheduler.Scheduler.release_lock" title="simso.core.Scheduler.Scheduler.release_lock"><code class="xref py py-meth docutils literal notranslate"><span class="pre">release_lock()</span></code></a> methods.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>scheduler_info</cite>: A <a class="reference internal" href="#simso.core.Scheduler.SchedulerInfo" title="simso.core.Scheduler.SchedulerInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchedulerInfo</span></code></a> representing the             scheduler.</p></li>
+</ul>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p><strong>sim</strong>: <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.             Useful to get current time with <code class="docutils literal notranslate"><span class="pre">sim.now_ms()</span></code> (in ms) or             <code class="docutils literal notranslate"><span class="pre">sim.now()</span></code> (in cycles).</p></li>
+<li><p><strong>processors</strong>: List of <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processors</span></code></a> handled by this scheduler.</p></li>
+<li><p><strong>task_list</strong>: List of <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks</span></code></a>             handled by this scheduler.</p></li>
+</ul>
+<p>Methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.add_processor">
+<span class="sig-name descname"><span class="pre">add_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.add_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a processor to the list of processors handled by this scheduler.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>processor</cite>: The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processor</span></code></a> to add.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.add_task">
+<span class="sig-name descname"><span class="pre">add_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.add_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a task to the list of tasks handled by this scheduler.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>task</cite>: The <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">task</span></code></a> to add.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.get_lock">
+<span class="sig-name descname"><span class="pre">get_lock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.get_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement a lock mechanism. Override it to remove the lock or change
+its behavior.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when the system is ready to run. This method
+should be used in lieu of the __init__ method. This method is
+guaranteed to be called when the simulation starts, after the tasks
+are instantiated</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.on_activate">
+<span class="sig-name descname"><span class="pre">on_activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.on_activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called upon a job activation.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>job</cite>: The activated <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">job</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.on_terminated">
+<span class="sig-name descname"><span class="pre">on_terminated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.on_terminated" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a job finish (termination or abortion).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>job</cite>: The <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">job</span></code></a> that terminates .</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.release_lock">
+<span class="sig-name descname"><span class="pre">release_lock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.release_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release the lock. Goes in pair with <a class="reference internal" href="#simso.core.Scheduler.Scheduler.get_lock" title="simso.core.Scheduler.Scheduler.get_lock"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_lock()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.Scheduler.schedule">
+<span class="sig-name descname"><span class="pre">schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.Scheduler.schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>The schedule method must be redefined by the simulated scheduler.
+It takes as argument the cpu on which the scheduler runs.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>cpu</cite>: The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processor</span></code></a>             on which the scheduler runs.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns a decision or a list of decisions. A decision is a couple
+(job, cpu).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Scheduler.SchedulerInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchedulerInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead_terminate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>SchedulerInfo groups the data that characterize a Scheduler (such as the
+scheduling overhead) and do the dynamic loading of the scheduler.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>name</cite>: Name of the scheduler.</p></li>
+<li><p><cite>cls</cite>: Class associated to this scheduler.</p></li>
+<li><p><cite>overhead</cite>: Overhead associated to a scheduling decision.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.SchedulerInfo.get_cls">
+<span class="sig-name descname"><span class="pre">get_cls</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.get_cls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the class of this scheduler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Scheduler.SchedulerInfo.instantiate">
+<span class="sig-name descname"><span class="pre">instantiate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Scheduler.SchedulerInfo.instantiate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiate the <a class="reference internal" href="#simso.core.Scheduler.Scheduler" title="simso.core.Scheduler.Scheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scheduler</span></code></a> class.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>model</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> object             that is passed to the constructor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Task">
+<span id="task"></span><h3><a class="toc-backref" href="#id6">Task</a><a class="headerlink" href="#module-simso.core.Task" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Task.ATask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ATask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.ATask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Non-periodic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericTask</span></code></a>. The job is
+created by another task.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskInfo</span></code></a> representing the Task.</p></li>
+</ul>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GenericTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.GenericTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract class for Tasks. <a class="reference internal" href="#simso.core.Task.ATask" title="simso.core.Task.ATask"><code class="xref py py-class docutils literal notranslate"><span class="pre">ATask</span></code></a> and <a class="reference internal" href="#simso.core.Task.PTask" title="simso.core.Task.PTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">PTask</span></code></a> inherits from
+this class.</p>
+<p>These classes simulate the behavior of the simulated task. It controls the
+release of the jobs and is able to abort the jobs that exceed their
+deadline.</p>
+<p>The majority of the task_info attributes are available through this class
+too. A set of metrics such as the number of preemptions and migrations are
+available for analysis.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskInfo</span></code></a> representing the Task.</p></li>
+</ul>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.create_job">
+<span class="sig-name descname"><span class="pre">create_job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.GenericTask.create_job" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new job from this task. This should probably not be used
+directly by a scheduler.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra data to characterize the task. Only used by the scheduler.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.deadline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deadline</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deadline in milliseconds.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.followed_by">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">followed_by</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.followed_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Task that is activated by the end of a job from this task.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.identifier">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">identifier</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identifier of the task.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.jobs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">jobs</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.jobs" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of the jobs.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.monitor">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">monitor</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>The monitor for this Task. Similar to a log mechanism (see Monitor in
+SimPy doc).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.period">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">period</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Period of the task.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.GenericTask.wcet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wcet</span></span><a class="headerlink" href="#simso.core.Task.GenericTask.wcet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Case Execution Time in milliseconds.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Task.PTask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.PTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Periodic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericTask</span></code></a>. The jobs are
+created periodically.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskInfo</span></code></a> representing the Task.</p></li>
+</ul>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Task.SporadicTask">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SporadicTask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.SporadicTask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sporadic Task process. Inherits from <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenericTask</span></code></a>. The jobs are
+created using a list of activation dates.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>task_info</cite>: A <a class="reference internal" href="#simso.core.Task.TaskInfo" title="simso.core.Task.TaskInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">TaskInfo</span></code></a> representing the Task.</p></li>
+</ul>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.core.Task.Task">
+<span class="sig-name descname"><span class="pre">Task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.Task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Task factory. Return and instantiate the correct class according to the
+task_info.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Task.TaskInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abort_on_miss</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wcet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acet</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">et_stddev</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deadline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_cpi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">followed_by</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_activation_dates</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preemption_cost</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.TaskInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>TaskInfo is mainly a container class grouping the data that characterize
+a Task. A list of TaskInfo objects are passed to the Model so that
+<a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> instances can be created.</p>
+<dl class="field-list simple">
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.TaskInfo.csdp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">csdp</span></span><a class="headerlink" href="#simso.core.Task.TaskInfo.csdp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accumulated Stack Distance Profile. Used by the cache models instead of
+the Stack Distance Profile for optimization matters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Task.TaskInfo.set_stack_file">
+<span class="sig-name descname"><span class="pre">set_stack_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cur_dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Task.TaskInfo.set_stack_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the stack distance profile.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Task.TaskInfo.stack_file">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">stack_file</span></span><a class="headerlink" href="#simso.core.Task.TaskInfo.stack_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack distance profile input file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Job">
+<span id="job"></span><h3><a class="toc-backref" href="#id7">Job</a><a class="headerlink" href="#module-simso.core.Job" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Job.Job">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Job</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Job.Job" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Job class simulate the behavior of a real Job. This <em>should</em> only be
+instantiated by a Task.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>task</cite>: The parent <a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">task</span></code></a>.</p></li>
+<li><p><cite>name</cite>: The name for this job.</p></li>
+<li><p><cite>pred</cite>: If the task is not periodic, pred is the job that             released this one.</p></li>
+<li><p><cite>monitor</cite>: A monitor is an object that log in time.</p></li>
+<li><p><cite>etm</cite>: The execution time model.</p></li>
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Job.Job.abort">
+<span class="sig-name descname"><span class="pre">abort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Job.Job.abort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abort this job. Warning, this is currently only used by the Task when
+the job exceeds its deadline. It has not be tested from outside, such
+as from the scheduler.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.aborted">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aborted</span></span><a class="headerlink" href="#simso.core.Job.Job.aborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the job has been aborted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.absolute_deadline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">absolute_deadline</span></span><a class="headerlink" href="#simso.core.Job.Job.absolute_deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Absolute deadline in milliseconds for this job. This is the activation
+date + the relative deadline.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.activation_date">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">activation_date</span></span><a class="headerlink" href="#simso.core.Job.Job.activation_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activation date in milliseconds for this job.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.actual_computation_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actual_computation_time</span></span><a class="headerlink" href="#simso.core.Job.Job.actual_computation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computation time in ms as if the processor speed was 1.0 during the
+whole execution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.actual_computation_time_cycles">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">actual_computation_time_cycles</span></span><a class="headerlink" href="#simso.core.Job.Job.actual_computation_time_cycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computation time as if the processor speed was 1.0 during the whole
+execution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.computation_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">computation_time</span></span><a class="headerlink" href="#simso.core.Job.Job.computation_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time spent executing the job in ms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.computation_time_cycles">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">computation_time_cycles</span></span><a class="headerlink" href="#simso.core.Job.Job.computation_time_cycles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Time spent executing the job.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.cpu">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cpu</span></span><a class="headerlink" href="#simso.core.Job.Job.cpu" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processor</span></code></a> on which the
+job is attached. Equivalent to <code class="docutils literal notranslate"><span class="pre">self.task.cpu</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><a class="headerlink" href="#simso.core.Job.Job.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The extra data specified for the task. Equivalent to
+<code class="docutils literal notranslate"><span class="pre">self.task.data</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.deadline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deadline</span></span><a class="headerlink" href="#simso.core.Job.Job.deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Relative deadline in milliseconds.
+Equivalent to <code class="docutils literal notranslate"><span class="pre">self.task.deadline</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.end_date">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">end_date</span></span><a class="headerlink" href="#simso.core.Job.Job.end_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date (in ms) when this job finished its execution.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.exceeded_deadline">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exceeded_deadline</span></span><a class="headerlink" href="#simso.core.Job.Job.exceeded_deadline" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if the end_date is greater than the deadline or if the job was
+aborted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Job.Job.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Job.Job.is_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the job is still active.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Job.Job.is_running">
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Job.Job.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the job is currently running on a processor.
+Equivalent to <code class="docutils literal notranslate"><span class="pre">self.cpu.running</span> <span class="pre">==</span> <span class="pre">self</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.laxity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">laxity</span></span><a class="headerlink" href="#simso.core.Job.Job.laxity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dynamic laxity of the job in ms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.period">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">period</span></span><a class="headerlink" href="#simso.core.Job.Job.period" title="Permalink to this definition">¶</a></dt>
+<dd><p>Period in milliseconds. Equivalent to <code class="docutils literal notranslate"><span class="pre">self.task.period</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.ret">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ret</span></span><a class="headerlink" href="#simso.core.Job.Job.ret" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remaining execution time in ms.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.start_date">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">start_date</span></span><a class="headerlink" href="#simso.core.Job.Job.start_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Date (in ms) when this job started executing
+(different than the activation).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.task">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task</span></span><a class="headerlink" href="#simso.core.Job.Job.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#simso.core.Task.Task" title="simso.core.Task.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">task</span></code></a> for this job.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Job.Job.wcet">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wcet</span></span><a class="headerlink" href="#simso.core.Job.Job.wcet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Case Execution Time in milliseconds.
+Equivalent to <code class="docutils literal notranslate"><span class="pre">self.task.wcet</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Model">
+<span id="model"></span><h3><a class="toc-backref" href="#id8">Model</a><a class="headerlink" href="#module-simso.core.Model" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Model.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main class for the simulation. It instantiate the various components
+required by the simulation and run it.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>callback</cite>: A callback can be specified. This function will be                 called to report the advance of the simulation (useful for a                 progression bar).</p></li>
+<li><p><cite>configuration</cite>: The <a class="reference internal" href="#module-simso.configuration.Configuration" title="simso.configuration.Configuration"><code class="xref py py-class docutils literal notranslate"><span class="pre">configuration</span></code></a> of the simulation.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.cycles_per_ms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cycles_per_ms</span></span><a class="headerlink" href="#simso.core.Model.Model.cycles_per_ms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of cycles per milliseconds. A cycle is the internal unit used
+by SimSo. However, the tasks are defined using milliseconds.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.duration">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#simso.core.Model.Model.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duration of the simulation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.etm">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">etm</span></span><a class="headerlink" href="#simso.core.Model.Model.etm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execution Time Model</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.logs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logs</span></span><a class="headerlink" href="#simso.core.Model.Model.logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>All the logs from the <a class="reference internal" href="#simso.core.Logger.Logger" title="simso.core.Logger.Logger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.processors">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">processors</span></span><a class="headerlink" href="#simso.core.Model.Model.processors" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all the processors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Model.Model.run_model">
+<span class="sig-name descname"><span class="pre">run_model</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Model.Model.run_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the simulation.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Model.Model.task_list">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task_list</span></span><a class="headerlink" href="#simso.core.Model.Model.task_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of all the tasks.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Processor">
+<span id="processor"></span><h3><a class="toc-backref" href="#id9">Processor</a><a class="headerlink" href="#module-simso.core.Processor" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Processor.Processor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc_info</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Processor.Processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>A processor is responsible of deciding whether the simulated processor
+should execute a job or execute the scheduler. There is one instance of
+Processor per simulated processor. Those are responsible to call the
+scheduler methods.</p>
+<p>When a scheduler needs to take a scheduling decision, it must invoke the
+<a class="reference internal" href="#simso.core.Processor.Processor.resched" title="simso.core.Processor.Processor.resched"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resched()</span></code></a> method. This is typically done in the <a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_activate" title="simso.core.Scheduler.Scheduler.on_activate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_activate</span></code></a>, <a class="reference internal" href="#simso.core.Scheduler.Scheduler.on_terminated" title="simso.core.Scheduler.Scheduler.on_terminated"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_terminated</span></code></a> or in a <a class="reference internal" href="#simso.core.Timer.Timer" title="simso.core.Timer.Timer"><code class="xref py py-class docutils literal notranslate"><span class="pre">timer</span></code></a> handler.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Processor.Processor.internal_id">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">internal_id</span></span><a class="headerlink" href="#simso.core.Processor.Processor.internal_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A unique, internal, id.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Processor.Processor.is_running">
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Processor.Processor.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if a job is currently running on that processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Processor.Processor.resched">
+<span class="sig-name descname"><span class="pre">resched</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Processor.Processor.resched" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a resched event to the list of events to handle.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Processor.Processor.running">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">running</span></span><a class="headerlink" href="#simso.core.Processor.Processor.running" title="Permalink to this definition">¶</a></dt>
+<dd><p>The job currently running on that processor. None if no job is
+currently running on the processor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Timer">
+<span id="timer"></span><h3><a class="toc-backref" href="#id10">Timer</a><a class="headerlink" href="#module-simso.core.Timer" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Timer.InstanceTimer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InstanceTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Timer.InstanceTimer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Timer.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delay</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_shot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prior</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cpu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Timer.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to declare a timer. A timer is a mechanism that allows to call a
+function after a certain amount of time, periodically or single shot.</p>
+<p>A Timer can be used with or without specifying a processor. If a processor
+is specified, when the timer fire, if a job was running on the processor,
+it is temporarly interrupted. This is more realistic, even if for the
+moment there is no overhead associated to this action. A scheduler using a
+timer should define on which processor the callback will execute.</p>
+<p>The delay is expressed in milliseconds by default but it can also be given
+in cycles.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>sim</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a> object.</p></li>
+<li><p><cite>function</cite>: Callback function, called when the delay expires.</p></li>
+<li><p><cite>args</cite>: Arguments passed to the callback function.</p></li>
+<li><p><cite>delay</cite>: Time to wait before calling the function.</p></li>
+<li><p><cite>one_shot</cite>: True if the timer should execute only once.</p></li>
+<li><p><cite>prior</cite>: If true, for the same date, the simulation should             start by handling the timer (should probably not be True).</p></li>
+<li><p><cite>cpu</cite>: On which <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processor</span></code></a> the function is virtually             executing.</p></li>
+<li><p><cite>in_ms</cite>: True if the delay is expressed in millisecond. In             cycles otherwise.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Timer.Timer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Timer.Timer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the timer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Timer.Timer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Timer.Timer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.Logger">
+<span id="logger"></span><h3><a class="toc-backref" href="#id11">Logger</a><a class="headerlink" href="#module-simso.core.Logger" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.Logger.Logger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Logger.Logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple logger. Every message is logged with its date.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>sim</cite>: The <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a> object.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.Logger.Logger.log">
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.Logger.Logger.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log the message <cite>msg</cite>.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>msg</cite>: The message to log.</p></li>
+<li><p><cite>kernel</cite>: Allows to make a distinction between a message from             the core of the simulation or from the scheduler.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.Logger.Logger.logs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">logs</span></span><a class="headerlink" href="#simso.core.Logger.Logger.logs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The logs, a SimPy Monitor object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-simso.core.results">
+<span id="results"></span><h3><a class="toc-backref" href="#id12">results</a><a class="headerlink" href="#module-simso.core.results" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.results.JobR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">JobR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">job</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.JobR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a set of metrics to a job. Such metrics include: preemption count,
+migration count, response time, etc.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.results.ProcessorR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ProcessorR</span></span><a class="headerlink" href="#simso.core.results.ProcessorR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add information about a processor such as the number of CxtSave and
+CxtLoad and their total overhead.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.results.Results">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.Results" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class embeds and analyzes all the results from the simulation.
+This allows to retrieve the usual metrics.</p>
+<dl class="simple">
+<dt>The Results instance object contains the following attributes:</dt><dd><ul class="simple">
+<li><p><cite>tasks</cite>: a dictionary of TaskR where the key is the original Task.</p></li>
+<li><p><cite>scheduler</cite>: a SchedulerR instance.</p></li>
+<li><p><cite>processors</cite>: a dictionary of ProcessorR where the key is the             original Processor.</p></li>
+</ul>
+</dd>
+</dl>
+<p>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.results.Results.calc_load">
+<span class="sig-name descname"><span class="pre">calc_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.Results.calc_load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Yield a tuple (proc, load, overhead) for each processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.results.Results.get_observation_window">
+<span class="sig-name descname"><span class="pre">get_observation_window</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.Results.get_observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the observation window.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.core.results.Results.observation_window">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">observation_window</span></span><a class="headerlink" href="#simso.core.results.Results.observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the observation window.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.results.Results.set_observation_window">
+<span class="sig-name descname"><span class="pre">set_observation_window</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.Results.set_observation_window" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the observation window. The events that occurs outside of the
+observation window are discarded.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.core.results.Results.tasks_event">
+<span class="sig-name descname"><span class="pre">tasks_event</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.Results.tasks_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generator of the tasks events sorted by their date.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.results.SchedulerR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SchedulerR</span></span><a class="headerlink" href="#simso.core.results.SchedulerR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add information about the scheduler such as the number of scheduling
+events and their total overhead.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.core.results.TaskR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TaskR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_preemption</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.core.results.TaskR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a set of metrics to a task. These metrics include: task_migrations,
+abortion count, etc.</p>
+<p>The attribute jobs contains a list of JobR, sorted by activation date.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="module-simso.configuration">
+<span id="simso-configuration-module"></span><h2><a class="toc-backref" href="#id13">simso.configuration module</a><a class="headerlink" href="#module-simso.configuration" title="Permalink to this headline">¶</a></h2>
+<section id="module-simso.configuration.Configuration">
+<span id="configuration"></span><h3><a class="toc-backref" href="#id14">Configuration</a><a class="headerlink" href="#module-simso.configuration.Configuration" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Configuration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>The configuration class store all the details about a system. An instance
+of this class will be passed to the constructor of the
+<a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> class.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>filename</cite> A file can be used to initialize the configuration.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.add_processor">
+<span class="sig-name descname"><span class="pre">add_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs_overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cl_overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">migration_overhead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to create a ProcInfo and add it to the list of
+processors.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.add_task">
+<span class="sig-name descname"><span class="pre">add_task</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Periodic'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abort_on_miss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_instr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wcet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">et_stddev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deadline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_cpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">followed_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_activation_dates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preemption_cost</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.add_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper method to create a TaskInfo and add it to the list of tasks.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.check_all">
+<span class="sig-name descname"><span class="pre">check_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.check_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the correctness of the configuration (without simulating it).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.get_hyperperiod">
+<span class="sig-name descname"><span class="pre">get_hyperperiod</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.get_hyperperiod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and return the hyperperiod of the tasks.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.proc_info_list">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">proc_info_list</span></span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.proc_info_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of processors (ProcInfo objects).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulation_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current configuration in a file. If no file is given as
+argument, the previous file used to write or read the configuration is
+used again.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.scheduler_info">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scheduler_info</span></span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.scheduler_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>SchedulerInfo object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="simso.configuration.Configuration.Configuration.task_info_list">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">task_info_list</span></span><a class="headerlink" href="#simso.configuration.Configuration.Configuration.task_info_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of tasks (TaskInfo objects).</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-simso.generator.task_generator">
+<span id="simso-generator-module"></span><h2><a class="toc-backref" href="#id15">simso.generator module</a><a class="headerlink" href="#module-simso.generator.task_generator" title="Permalink to this headline">¶</a></h2>
+<p>Tools for generating task sets.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.StaffordRandFixedSum">
+<span class="sig-name descname"><span class="pre">StaffordRandFixedSum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.StaffordRandFixedSum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copyright 2010 Paul Emberson, Roger Stafford, Robert Davis.
+All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Redistributions of source code must retain the above copyright notice,</dt><dd><p>this list of conditions and the following disclaimer.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Redistributions in binary form must reproduce the above copyright notice,</dt><dd><p>this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS <a href="#id1"><span class="problematic" id="id2">``</span></a>AS IS’’ AND ANY EXPRESS
+OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+EVENT SHALL THE AUTHORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+<p>The views and conclusions contained in the software and documentation are
+those of the authors and should not be interpreted as representing official
+policies, either expressed or implied, of Paul Emberson, Roger Stafford or
+Robert Davis.</p>
+<p>Includes Python implementation of Roger Stafford’s randfixedsum implementation
+<a class="reference external" href="http://www.mathworks.com/matlabcentral/fileexchange/9700">http://www.mathworks.com/matlabcentral/fileexchange/9700</a>
+Adapted specifically for the purpose of taskset generation with fixed
+total utilisation value</p>
+<p>Please contact <a class="reference external" href="mailto:paule&#37;&#52;&#48;rapitasystems&#46;com">paule<span>&#64;</span>rapitasystems<span>&#46;</span>com</a> or <a class="reference external" href="mailto:robdavis&#37;&#52;&#48;cs&#46;york&#46;ac&#46;uk">robdavis<span>&#64;</span>cs<span>&#46;</span>york<span>&#46;</span>ac<span>&#46;</span>uk</a> if you have
+any questions regarding this software.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_kato_utilizations">
+<span class="sig-name descname"><span class="pre">gen_kato_utilizations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">umin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">umax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_util</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_kato_utilizations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kato et al. tasksets generator.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>nsets</cite>: Number of tasksets to generate.</p></li>
+<li><p><cite>umin</cite>: Minimum task utilization.</p></li>
+<li><p><cite>umax</cite>: Maximum task utilization.</p></li>
+<li><p><cite>target_util</cite>:</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_periods_discrete">
+<span class="sig-name descname"><span class="pre">gen_periods_discrete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_periods_discrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a matrix of (nsets x n) random periods chosen randomly in the
+list of periods.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>n</cite>: The number of tasks in a task set.</p></li>
+<li><p><cite>nsets</cite>: Number of sets to generate.</p></li>
+<li><p><cite>periods</cite>: A list of available periods.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_periods_loguniform">
+<span class="sig-name descname"><span class="pre">gen_periods_loguniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_to_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_periods_loguniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a list of <cite>nsets</cite> sets containing each <cite>n</cite> random periods using a
+loguniform distribution.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>n</cite>: The number of tasks in a task set.</p></li>
+<li><p><cite>nsets</cite>: Number of sets to generate.</p></li>
+<li><p><cite>min_</cite>: Period min.</p></li>
+<li><p><cite>max_</cite>: Period max.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_periods_uniform">
+<span class="sig-name descname"><span class="pre">gen_periods_uniform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_to_int</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_periods_uniform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a list of <cite>nsets</cite> sets containing each <cite>n</cite> random periods using a
+uniform distribution.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>n</cite>: The number of tasks in a task set.</p></li>
+<li><p><cite>nsets</cite>: Number of sets to generate.</p></li>
+<li><p><cite>min_</cite>: Period min.</p></li>
+<li><p><cite>max_</cite>: Period max.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_randfixedsum">
+<span class="sig-name descname"><span class="pre">gen_randfixedsum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_randfixedsum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stafford’s RandFixedSum algorithm implementated in Python.</p>
+<p>Based on the Python implementation given by Paul Emberson, Roger Stafford,
+and Robert Davis. Available under the Simplified BSD License.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>n</cite>: The number of tasks in a task set.</p></li>
+<li><p><cite>u</cite>: Total utilization of the task set.</p></li>
+<li><p><cite>nsets</cite>: Number of sets to generate.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_ripoll">
+<span class="sig-name descname"><span class="pre">gen_ripoll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compute</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deadline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_util</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_ripoll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ripoll et al. tasksets generator.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>nsets</cite>: Number of tasksets to generate.</p></li>
+<li><p><cite>compute</cite>: Maximum computation time of a task.</p></li>
+<li><p><cite>deadline</cite>: Maximum slack time.</p></li>
+<li><p><cite>period</cite>: Maximum delay after the deadline.</p></li>
+<li><p><cite>target_util</cite>: Total utilization to reach.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_tasksets">
+<span class="sig-name descname"><span class="pre">gen_tasksets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">utilizations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periods</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_tasksets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a list of task utilization sets and a list of task period sets and
+return a list of couples (c, p) sets. The computation times are truncated
+at a precision of 10^-10 to avoid floating point precision errors.</p>
+<dl>
+<dt>Args:</dt><dd><ul>
+<li><p><cite>utilization</cite>: The list of task utilization sets. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]]</span>
+</pre></div>
+</div>
+</li>
+<li><p><cite>periods</cite>: The list of task period sets. For examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">]]</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd>
+<dt>Returns:</dt><dd><p>For the above example, it returns:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[(</span><span class="mf">30.0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mf">20.0</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="p">(</span><span class="mf">800.0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)],</span>
+ <span class="p">[(</span><span class="mf">20.0</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="p">(</span><span class="mf">450.0</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.generator.task_generator.gen_uunifastdiscard">
+<span class="sig-name descname"><span class="pre">gen_uunifastdiscard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nsets</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.generator.task_generator.gen_uunifastdiscard" title="Permalink to this definition">¶</a></dt>
+<dd><p>The UUniFast algorithm was proposed by Bini for generating task
+utilizations on uniprocessor architectures.</p>
+<p>The UUniFast-Discard algorithm extends it to multiprocessor by
+discarding task sets containing any utilization that exceeds 1.</p>
+<p>This algorithm is easy and widely used. However, it suffers from very
+long computation times when n is close to u. Stafford’s algorithm is
+faster.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>n</cite>: The number of tasks in a task set.</p></li>
+<li><p><cite>u</cite>: Total utilization of the task set.</p></li>
+<li><p><cite>nsets</cite>: Number of sets to generate.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns <cite>nsets</cite> of <cite>n</cite> task utilizations.</p>
+</dd></dl>
+
+</section>
+<section id="simso-utils-module">
+<h2><a class="toc-backref" href="#id16">simso.utils module</a><a class="headerlink" href="#simso-utils-module" title="Permalink to this headline">¶</a></h2>
+<section id="module-simso.utils.PartitionedScheduler">
+<span id="partitionedscheduler"></span><h3><a class="toc-backref" href="#id17">PartitionedScheduler</a><a class="headerlink" href="#module-simso.utils.PartitionedScheduler" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PartitionedScheduler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler_info</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The PartitionedScheduler class provide facilities to create a new
+Partitioned Scheduler. Only the packing phase is not done and should
+be overriden.</p>
+<p>Args:</p>
+<ul class="simple">
+<li><p><cite>sim</cite>: <a class="reference internal" href="#module-simso.core.Model" title="simso.core.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.</p></li>
+<li><p><cite>scheduler_info</cite>: A <code class="xref py py-class docutils literal notranslate"><span class="pre">SchedulerInfo</span></code> representing the             scheduler.</p></li>
+</ul>
+<p>Attributes:</p>
+<ul class="simple">
+<li><p><strong>sim</strong>: <a class="reference internal" href="#simso.core.Model.Model" title="simso.core.Model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a> instance.             Useful to get current time with <code class="docutils literal notranslate"><span class="pre">sim.now_ms()</span></code> (in ms) or             <code class="docutils literal notranslate"><span class="pre">sim.now()</span></code> (in cycles).</p></li>
+<li><p><strong>processors</strong>: List of <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processors</span></code></a> handled by this scheduler.</p></li>
+<li><p><strong>task_list</strong>: List of <a class="reference internal" href="#simso.core.Task.GenericTask" title="simso.core.Task.GenericTask"><code class="xref py py-class docutils literal notranslate"><span class="pre">tasks</span></code></a>             handled by this scheduler.</p></li>
+</ul>
+<p>Methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler.get_lock">
+<span class="sig-name descname"><span class="pre">get_lock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.get_lock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement a lock mechanism. Override it to remove the lock or change
+its behavior.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">packer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.init" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>scheduler_info</cite>: A <a class="reference internal" href="#simso.core.Scheduler.SchedulerInfo" title="simso.core.Scheduler.SchedulerInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchedulerInfo</span></code></a> object. One scheduler from             this SchedulerInfo will be instantiated for each processor.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler.on_activate">
+<span class="sig-name descname"><span class="pre">on_activate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.on_activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called upon a job activation.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>job</cite>: The activated <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">job</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler.on_terminated">
+<span class="sig-name descname"><span class="pre">on_terminated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">job</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.on_terminated" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when a job finish (termination or abortion).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>job</cite>: The <a class="reference internal" href="#simso.core.Job.Job" title="simso.core.Job.Job"><code class="xref py py-class docutils literal notranslate"><span class="pre">job</span></code></a> that terminates .</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.PartitionedScheduler.schedule">
+<span class="sig-name descname"><span class="pre">schedule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cpu</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.PartitionedScheduler.schedule" title="Permalink to this definition">¶</a></dt>
+<dd><p>The schedule method must be redefined by the simulated scheduler.
+It takes as argument the cpu on which the scheduler runs.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><ul class="simple">
+<li><p><cite>cpu</cite>: The <a class="reference internal" href="#simso.core.Processor.Processor" title="simso.core.Processor.Processor"><code class="xref py py-class docutils literal notranslate"><span class="pre">processor</span></code></a>             on which the scheduler runs.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns a decision or a list of decisions. A decision is a couple
+(job, cpu).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.best_fit">
+<span class="sig-name descname"><span class="pre">best_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.best_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Best-Fit heuristic. Put the tasks somewhere it fits but with the least
+spare place.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.decreasing_best_fit">
+<span class="sig-name descname"><span class="pre">decreasing_best_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_best_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Best-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.decreasing_first_fit">
+<span class="sig-name descname"><span class="pre">decreasing_first_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_first_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>First-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.decreasing_next_fit">
+<span class="sig-name descname"><span class="pre">decreasing_next_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_next_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Next-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.decreasing_worst_fit">
+<span class="sig-name descname"><span class="pre">decreasing_worst_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.decreasing_worst_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Fit with tasks inversely sorted by their u_i.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.first_fit">
+<span class="sig-name descname"><span class="pre">first_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.first_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>First-Fit heuristic. Put each task on the first processor with enough
+space.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.next_fit">
+<span class="sig-name descname"><span class="pre">next_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.next_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Next-Fit heuristic. Put each task on the next processor with enough space.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="simso.utils.PartitionedScheduler.worst_fit">
+<span class="sig-name descname"><span class="pre">worst_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scheduler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#simso.utils.PartitionedScheduler.worst_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Worst-Fit heuristic. Put the tasks somewhere it fits with the largest
+spare place.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="licenses.html" title="Licenses"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="text_mode.html" title="Using SimSo in script mode"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SimSo documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Main modules</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>

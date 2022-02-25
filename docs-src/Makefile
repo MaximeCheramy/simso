@@ -16,12 +16,9 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 default: doc
 
 doc:
-	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/../docs
 	@echo
-	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
-
-dist: doc
-	scp -r html/* mcheramy@homepages.laas.fr:~/simso/doc/
+	@echo "Build finished. The HTML pages are in /docs."
 
 clean:
 	-rm -rf $(BUILDDIR)/html

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Frequently Asked Questions &#8212; SimSo documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How to write a scheduling policy" href="write_scheduler.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="write_scheduler.html" title="How to write a scheduling policy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SimSo documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Frequently Asked Questions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <section id="frequently-asked-questions">
+<h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<p>(please send me your questions in order to complete this list.)</p>
+<section id="does-it-work-on-my-operating-system">
+<h2>Does it work on my operating system?<a class="headerlink" href="#does-it-work-on-my-operating-system" title="Permalink to this headline">¶</a></h2>
+<p>SimSo is fully written in Python and depends on libraries that are available for Linux, Mac OS and Windows. If you install the dependencies, you can install SimSo using the source code. Otherwise, I also provide a debian/ubuntu package and a windows installer.</p>
+</section>
+<section id="can-i-use-my-own-task-generator">
+<h2>Can I use my own task generator?<a class="headerlink" href="#can-i-use-my-own-task-generator" title="Permalink to this headline">¶</a></h2>
+<p>If you are using SimSo from a Python script, you can create the tasks easily with the characteristics of your choice.</p>
+<p>If you are using the graphical user interface, you can generate an XML file compatible with SimSo. The XSD schema is shipped with the source code (it is incomplete though).</p>
+</section>
+<section id="does-simso-support-sporadic-tasks">
+<h2>Does SimSo support sporadic tasks?<a class="headerlink" href="#does-simso-support-sporadic-tasks" title="Permalink to this headline">¶</a></h2>
+<p>This was implemented in July 2014. With sporadic tasks, you must specify the list of activation dates. This allows you to use an external generator to control the arrival of the jobs.</p>
+</section>
+<section id="do-you-handle-uniform-and-or-heterogeneous-processors">
+<h2>Do you handle uniform and/or heterogeneous processors?<a class="headerlink" href="#do-you-handle-uniform-and-or-heterogeneous-processors" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to set a speed for each processor (uniform) but you can’t specify task execution speed in function of the processor (heterogeneous). However, this could be done by adding a new Execution Time Model.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="write_scheduler.html" title="How to write a scheduling policy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="Introduction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SimSo documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Frequently Asked Questions</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    </div>
+  </body>
+</html>
