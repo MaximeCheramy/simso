@@ -9,7 +9,7 @@ class Job(Process):
     """The Job class simulate the behavior of a real Job. This *should* only be
     instantiated by a Task."""
 
-    def __init__(self, task, name, pred, monitor, etm, sim):
+    def __init__(self, task, name, pred, monitor, etm, sim, wcet=None):
         """
         Args:
             - `task`: The parent :class:`task <simso.core.Task.Task>`.
@@ -44,6 +44,7 @@ class Job(Process):
         self._monitor = monitor
         self._etm = etm
         self._was_running_on = task.cpu
+        self._wcet = wcet
 
         self._on_activate()
 
@@ -243,7 +244,9 @@ class Job(Process):
         Worst-Case Execution Time in milliseconds.
         Equivalent to ``self.task.wcet``.
         """
-        return self._task.wcet
+        if (self._wcet is None):
+            return self._task.wcet
+        return self._wcet
 
     @property
     def activation_date(self):
@@ -291,7 +294,7 @@ class Job(Process):
             # Wait an execute order.
             yield passivate, self
 
-            # Execute the job.
+            # Execute the job.
             if not self.interrupted():
                 self._on_execute()
                 # ret is a duration lower than the remaining execution time.

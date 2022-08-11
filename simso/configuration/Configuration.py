@@ -4,6 +4,7 @@
 import os
 import re
 from xml.dom import minidom
+import numpy as np
 from simso.core.Scheduler import SchedulerInfo
 from simso.core import Scheduler
 from simso.core.Task import TaskInfo
@@ -181,22 +182,33 @@ class Configuration(object):
                 "name must begins with a letter and must not contains any "\
                 "special character."
 
-            # Activation date >= 0:
+            # Activation date >= 0:
             assert task.activation_date >= 0, \
                 "Activation date must be positive."
 
             # Period >= 0:
             assert task.period >= 0, "Tasks' periods must be positives."
 
-            # Deadline >= 0:
+            # Deadline >= 0:
             assert task.deadline >= 0, "Tasks' deadlines must be positives."
 
             # N_instr >= 0:
             assert task.n_instr >= 0, \
                 "A number of instructions must be positive."
 
-            # WCET >= 0:
-            assert task.wcet >= 0, "WCET must be positive."
+            # WCET >= 0:
+            if isinstance(task.wcet, np.ndarray):
+                assert np.min(task.wcet[0, :]) >= 0, "WCETs must be positive"
+                assert np.sum(task.wcet[1, :]) == 1, "probabilities sum must be 1"
+            else:
+                assert task.wcet >= 0, "WCET must be positive."
+                if self.etm == "cache":
+                    # stack
+                    assert task.stack_file, "A task needs a stack profile."
+
+                    # stack ok
+                    assert task.csdp, "Stack not found or empty."
+
 
             # ACET >= 0:
             assert task.acet >= 0, "ACET must be positive."
@@ -208,13 +220,6 @@ class Configuration(object):
             # mix in [0.0, 2.0]
             assert 0.0 <= task.mix <= 2.0, \
                 "A mix must be positive and less or equal than 2.0"
-
-            if self.etm == "cache":
-                # stack
-                assert task.stack_file, "A task needs a stack profile."
-
-                # stack ok
-                assert task.csdp, "Stack not found or empty."
 
     def check_caches(self):
         for index, cache in enumerate(self._caches_list):
@@ -231,7 +236,7 @@ class Configuration(object):
             # Taille positive :
             assert cache.size >= 0, "A cache size must be positive."
 
-            # Access time >= 0:
+            # Access time >= 0:
             assert cache.access_time >= 0, "An access time must be positive."
 
     def get_hyperperiod(self):

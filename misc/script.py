@@ -7,6 +7,7 @@ Example of a script that uses SimSo.
 import sys
 from simso.core import Model
 from simso.configuration import Configuration
+import numpy as np
 
 
 def main(argv):
@@ -21,7 +22,7 @@ def main(argv):
 
         # Add tasks:
         configuration.add_task(name="T1", identifier=1, period=7,
-                               activation_date=0, wcet=3, deadline=7)
+                               activation_date=0, wcet=np.array([[1,2,3],[.1,.2,.7]]), deadline=7)   # add a task with a probabilistic WCET
         configuration.add_task(name="T2", identifier=2, period=12,
                                activation_date=0, wcet=3, deadline=12)
         configuration.add_task(name="T3", identifier=3, period=20,
