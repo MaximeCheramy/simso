@@ -1,6 +1,5 @@
 from __future__ import print_function
 import sys
-import imp
 import os.path
 import importlib
 import pkgutil
@@ -57,18 +56,19 @@ class SchedulerInfo(object):
                     clas = self.clas
                 else:
                     name = self.clas.rsplit('.', 1)[1]
-                    importlib.import_module(self.clas)
-                    clas = getattr(importlib.import_module(self.clas), name)
+                    module = importlib.import_module(self.clas)
+                    clas = getattr(module, name)
             elif self.filename:
                 path, name = os.path.split(self.filename)
-                name = os.path.splitext(name)[0]
-
-                fp, pathname, description = imp.find_module(name, [path])
+                module_name = os.path.splitext(name)[0]
+		
                 if path not in sys.path:
                     sys.path.append(path)
-                clas = getattr(imp.load_module(name, fp, pathname,
-                                               description), name)
-                fp.close()
+
+                spec = importlib.util.spec_from_file_location(module_name, self.filename)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                clas = getattr(module, module_name)                    
 
             return clas
         except Exception as e:
