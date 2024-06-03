@@ -2,8 +2,10 @@
 
 from collections import deque
 from SimPy.Simulation import Process, Monitor, hold, passivate
+import numpy as np
 from simso.core.Job import Job
 from simso.core.Timer import Timer
+from simso.utils.probabilistic_calc import random_int_from_distr
 from .CSDP import CSDP
 
 import os
@@ -272,9 +274,15 @@ class GenericTask(Process):
         directly by a scheduler.
         """
         self._job_count += 1
-        job = Job(self, "{}_{}".format(self.name, self._job_count), pred,
-                  monitor=self._monitor, etm=self._etm, sim=self.sim)
 
+        # pick random wcet according to their probabilities
+        if isinstance(self.wcet, np.ndarray):
+            wcet_sample = random_int_from_distr(self.wcet, n_sample=1)[0] 
+        else:
+            wcet_sample = None
+
+        job = Job(self, "{}_{}".format(self.name, self._job_count), pred,
+                  monitor=self._monitor, etm=self._etm, sim=self.sim, wcet=wcet_sample)
         if len(self._activations_fifo) == 0:
             self.job = job
             self.sim.activate(job, job.activate_job())
